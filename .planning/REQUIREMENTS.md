@@ -84,25 +84,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-01 | Phase 1 | Pending |
 | CHAT-02 | Phase 1 | Pending |
 | CHAT-03 | Phase 2 | Pending |
-| CHAT-04 | Phase 3 | Pending |
-| TOOL-01 | Phase 2 | Pending |
-| TOOL-02 | Phase 2 | Pending |
-| TOOL-03 | Phase 2 | Pending |
-| TOOL-04 | Phase 2 | Pending |
-| SAFE-01 | Phase 2 | Pending |
-| SAFE-02 | Phase 2 | Pending |
+| CHAT-04 | Phase 5 | Pending |
+| TOOL-01 | Phase 3 | Pending |
+| TOOL-02 | Phase 3 | Pending |
+| TOOL-03 | Phase 4 | Pending |
+| TOOL-04 | Phase 4 | Pending |
+| SAFE-01 | Phase 3 | Pending |
+| SAFE-02 | Phase 3 | Pending |
 | SAFE-03 | Phase 1 | Pending |
-| SAFE-04 | Phase 2 | Pending |
-| UI-01 | Phase 2 | Pending |
-| UI-02 | Phase 3 | Pending |
-| UI-03 | Phase 3 | Pending |
-| MEM-01 | Phase 2 | Pending |
+| SAFE-04 | Phase 4 | Pending |
+| UI-01 | Phase 3 | Pending |
+| UI-02 | Phase 2 | Pending |
+| UI-03 | Phase 5 | Pending |
+| MEM-01 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 14 total
 - Mapped to phases: 14
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-11*
-*Last updated: 2026-03-11 after initial definition*
+*Last updated: 2026-03-11 after roadmap creation*

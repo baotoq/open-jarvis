@@ -38,3 +38,13 @@ npm run lint          # lint
 - Go: standard `gofmt` style, explicit error returns, go-zero patterns for API/RPC definitions
 - TypeScript: strict mode enabled, Next.js App Router conventions, PascalCase for components/types
 - Package manager for TypeScript: `npm`
+
+## Codebase Docs
+- refer to `.planning/codebase` for more infor
+  `ARCHITECTURE.md`
+  `CONCERNS.md`
+  `CONVENTIONS.md`
+  `INTEGRATIONS.md`
+  `STACK.md`
+  `STRUCTURE.md`
+  `TESTING.md`
