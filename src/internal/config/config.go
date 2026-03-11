@@ -2,11 +2,14 @@ package config
 
 import "github.com/zeromicro/go-zero/rest"
 
+// DefaultSystemPrompt is the default system prompt used when none is configured.
+const DefaultSystemPrompt = "You are Jarvis, a personal AI assistant. Be concise and helpful."
+
 type ModelConfig struct {
 	BaseURL      string `json:",default=http://localhost:11434/v1"`
 	Name         string `json:",default=llama3.2"`
 	APIKey       string `json:",optional"`
-	SystemPrompt string `json:",default=You are Jarvis, a personal AI assistant. Be concise and helpful."`
+	SystemPrompt string `json:",optional"`
 }
 
 type Config struct {
