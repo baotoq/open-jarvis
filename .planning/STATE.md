@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Completed 08-01-PLAN.md (Tilt workflow — checkpoint approved)
-last_updated: "2026-03-11T19:13:23.179Z"
+stopped_at: Completed 07-01-PLAN.md (domain logic grouping)
+last_updated: "2026-03-11T19:16:08.956Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 30
-  completed_plans: 22
+  completed_plans: 23
   percent: 0
 ---
 
@@ -72,6 +72,7 @@ Progress: [..........] 0%
 | Phase 06-add-go-linting P03 | 8min | 2 tasks | 14 files |
 | Phase 06-add-go-linting PP04 | 2min | 2 tasks | 1 files |
 | Phase 08-add-tilt P01 | 5min | 1 tasks | 4 files |
+| Phase 07-group-be-to-related-domain-instead-of-flat P01 | 357s | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -126,6 +127,7 @@ Recent decisions affecting current work:
 - [Phase 08-add-tilt]: serve_cmd (not cmd) used in Tiltfile for long-running processes — cmd exits immediately after process spawned
 - [Phase 08-add-tilt]: readiness_probe tcp_socket_action(port=8888) ensures frontend resource_deps waits for backend to actually listen
 - [Phase 08-add-tilt]: ignore=['src/backend/tmp', 'src/backend/data'] prevents Tilt thrashing on air build output and SQLite writes
+- [Phase 07-group-be-to-related-domain-instead-of-flat]: Config logic package named cfg (not config) to avoid collision with internal/config package
 
 ### Roadmap Evolution
 
@@ -143,6 +145,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T00:00:00Z
-Stopped at: Completed 08-01-PLAN.md (Tilt workflow — checkpoint approved)
+Last session: 2026-03-11T19:16:08.952Z
+Stopped at: Completed 07-01-PLAN.md (domain logic grouping)
 Resume file: None
