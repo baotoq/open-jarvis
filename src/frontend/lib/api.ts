@@ -86,3 +86,40 @@ export async function submitApproval(approvalId: string, approved: boolean): Pro
     throw new Error(`approve failed: ${res.status}`)
   }
 }
+
+// Phase 5: Model config and conversation search
+
+export interface ModelConfig {
+  baseURL: string
+  name: string
+  apiKey: string
+  systemPrompt: string
+}
+
+export interface SearchResult {
+  id: string
+  title: string
+  updatedAt: number
+  snippet: string
+}
+
+export async function getConfig(): Promise<ModelConfig> {
+  const res = await fetch(`${API_BASE}/api/config`)
+  if (!res.ok) throw new Error(`getConfig failed: ${res.status}`)
+  return res.json()
+}
+
+export async function updateConfig(cfg: ModelConfig): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/config`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cfg),
+  })
+  if (!res.ok) throw new Error(`updateConfig failed: ${res.status}`)
+}
+
+export async function searchConversations(q: string): Promise<SearchResult[]> {
+  const res = await fetch(`${API_BASE}/api/conversations/search?q=${encodeURIComponent(q)}`)
+  if (!res.ok) throw new Error(`search failed: ${res.status}`)
+  return res.json()
+}
