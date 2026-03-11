@@ -16,7 +16,7 @@ func newSearchTestStore(t *testing.T) (*svc.SQLiteConvStore, *sql.DB) {
 	tmpFile := t.TempDir() + "/search_test.db"
 	db, err := sql.Open("sqlite", tmpFile)
 	require.NoError(t, err)
-	t.Cleanup(func() { db.Close() })
+	t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 	store, err := svc.NewSQLiteConvStore(db)
 	require.NoError(t, err)
 	return store, db
@@ -36,7 +36,7 @@ func TestFTSMigration(t *testing.T) {
 	// Verify FTS5 is functional by running a simple MATCH query (no rows expected)
 	rows, err := db.Query(`SELECT rowid FROM messages_fts WHERE messages_fts MATCH ? LIMIT 1`, `"test"`)
 	require.NoError(t, err, "FTS5 MATCH query should execute without error")
-	rows.Close()
+	rows.Close() //nolint:errcheck // cleanup in test; error logged by sql driver
 }
 
 func TestFTSMigration_ExistingRows(t *testing.T) {
@@ -45,7 +45,7 @@ func TestFTSMigration_ExistingRows(t *testing.T) {
 	tmpFile := t.TempDir() + "/existing_rows.db"
 	db, err := sql.Open("sqlite", tmpFile)
 	require.NoError(t, err)
-	t.Cleanup(func() { db.Close() })
+	t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 
 	// Create base schema manually (without FTS)
 	_, err = db.Exec(`

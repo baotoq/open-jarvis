@@ -2,6 +2,7 @@ package svc
 
 import (
 	"database/sql"
+	"log"
 	"strings"
 	"time"
 
@@ -97,7 +98,11 @@ func (s *SQLiteConvStore) Get(sessionID string) []openai.ChatCompletionMessage {
 	if err != nil {
 		return nil
 	}
-	defer rows.Close()
+	defer func() {
+		if err := rows.Close(); err != nil {
+			log.Printf("rows.Close: %v", err)
+		}
+	}()
 
 	var msgs []openai.ChatCompletionMessage
 	for rows.Next() {
@@ -123,7 +128,9 @@ func (s *SQLiteConvStore) Set(sessionID string, msgs []openai.ChatCompletionMess
 	}
 	defer func() {
 		if err != nil {
-			tx.Rollback()
+			if rErr := tx.Rollback(); rErr != nil {
+				log.Printf("tx.Rollback: %v", rErr)
+			}
 		}
 	}()
 
@@ -166,7 +173,11 @@ func (s *SQLiteConvStore) ListConversations() ([]Conversation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() {
+		if err := rows.Close(); err != nil {
+			log.Printf("rows.Close: %v", err)
+		}
+	}()
 
 	var convs []Conversation
 	for rows.Next() {
@@ -252,7 +263,11 @@ func (s *SQLiteConvStore) SearchConversations(query string) ([]SearchResult, err
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() {
+		if err := rows.Close(); err != nil {
+			log.Printf("rows.Close: %v", err)
+		}
+	}()
 
 	var results []SearchResult
 	for rows.Next() {

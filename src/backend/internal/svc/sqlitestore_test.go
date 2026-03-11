@@ -15,7 +15,7 @@ func newTestStore(t *testing.T) *svc.SQLiteConvStore {
 	t.Helper()
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
-	t.Cleanup(func() { db.Close() })
+	t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 	store, err := svc.NewSQLiteConvStore(db)
 	require.NoError(t, err)
 	return store
@@ -57,12 +57,12 @@ func TestSQLiteSetGetPersists(t *testing.T) {
 	store1, err := svc.NewSQLiteConvStore(db1)
 	require.NoError(t, err)
 	store1.Set("s-persist", msgs)
-	db1.Close()
+	db1.Close() //nolint:errcheck // cleanup in test; error logged by sql driver
 
 	// Reopen and verify
 	db2, err := sql.Open("sqlite", tmpFile)
 	require.NoError(t, err)
-	t.Cleanup(func() { db2.Close() })
+	t.Cleanup(func() { db2.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 	store2, err := svc.NewSQLiteConvStore(db2)
 	require.NoError(t, err)
 

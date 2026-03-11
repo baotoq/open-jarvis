@@ -14,7 +14,7 @@ func newTestAuditStore(t *testing.T) (*svc.AuditStore, *sql.DB) {
 	t.Helper()
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
-	t.Cleanup(func() { db.Close() })
+	t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 	store, err := svc.NewAuditStore(db)
 	require.NoError(t, err)
 	return store, db
@@ -24,7 +24,7 @@ func TestAuditStore(t *testing.T) {
 	t.Run("migrate idempotent", func(t *testing.T) {
 		db, err := sql.Open("sqlite", ":memory:")
 		require.NoError(t, err)
-		t.Cleanup(func() { db.Close() })
+		t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 
 		// First creation
 		_, err = svc.NewAuditStore(db)
