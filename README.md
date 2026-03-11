@@ -71,11 +71,53 @@ Each session maintains conversation history server-side, identified by `sessionI
 
 ## Development
 
+### Prerequisites
+
+- [Go](https://golang.org) 1.21+
+- [Node.js](https://nodejs.org) 18+
+- [Tilt](https://tilt.dev) — `brew install tilt` (macOS) or see https://docs.tilt.dev/install.html
+- [air](https://github.com/air-verse/air) — `go install github.com/air-verse/air@latest`
+
+### Start the dev environment
+
 ```bash
-cd src
+tilt up
+```
+
+This starts:
+- Go backend at http://localhost:8888 with live reload (via air)
+- Next.js frontend at http://localhost:3000 with hot reload
+
+The Tilt dashboard is at http://localhost:10350.
+
+On macOS, the browser opens automatically to http://localhost:3000. On Linux, visit the URL manually or change `open` to `xdg-open` in the Tiltfile.
+
+### Stop
+
+```bash
+tilt down
+```
+
+Data in `src/backend/data/` and `src/backend/etc/config.yaml` are preserved.
+
+### Manual (without Tilt)
+
+```bash
+# Backend
+cd src/backend && air        # or: go run ./cmd/main.go
+
+# Frontend
+cd src/frontend && npm run dev
+```
+
+### Tests and static analysis
+
+```bash
+cd src/backend
 go test ./...          # run tests
 go test -cover ./...   # with coverage
 go vet ./...           # static analysis
+golangci-lint run ./...  # lint
 go mod tidy            # clean dependencies
 ```
 
