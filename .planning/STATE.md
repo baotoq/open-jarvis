@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Completed 06-add-go-linting 06-04-PLAN.md
-last_updated: "2026-03-11T19:02:18.451Z"
+stopped_at: "Checkpoint: human-verify for 08-01-PLAN.md (Tilt workflow)"
+last_updated: "2026-03-11T19:08:18.932Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 30
-  completed_plans: 21
+  completed_plans: 22
   percent: 0
 ---
 
@@ -71,6 +71,7 @@ Progress: [..........] 0%
 | Phase 06-add-go-linting P02 | 294s | 2 tasks | 8 files |
 | Phase 06-add-go-linting P03 | 8min | 2 tasks | 14 files |
 | Phase 06-add-go-linting PP04 | 2min | 2 tasks | 1 files |
+| Phase 08-add-tilt P01 | 5min | 1 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,9 @@ Recent decisions affecting current work:
 - [Phase 06-add-go-linting]: t.Parallel() added to TestConvStoreConcurrent and TestConfigStoreUpdate_Concurrent to fix unused *testing.T parameter while improving test isolation
 - [Phase 06-add-go-linting]: mockAIStreamer removed from servicecontext_test.go — was defined but never instantiated
 - [Phase 06-add-go-linting]: go test -cover ./... fails on Go 1.26 for main packages with no test files (covdata tool missing); fixed by adding empty _test.go in cmd/
+- [Phase 08-add-tilt]: serve_cmd (not cmd) used in Tiltfile for long-running processes — cmd exits immediately after process spawned
+- [Phase 08-add-tilt]: readiness_probe tcp_socket_action(port=8888) ensures frontend resource_deps waits for backend to actually listen
+- [Phase 08-add-tilt]: ignore=['src/backend/tmp', 'src/backend/data'] prevents Tilt thrashing on air build output and SQLite writes
 
 ### Roadmap Evolution
 
@@ -139,6 +143,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T19:02:18.448Z
-Stopped at: Completed 06-add-go-linting 06-04-PLAN.md
+Last session: 2026-03-11T19:08:11.266Z
+Stopped at: Checkpoint: human-verify for 08-01-PLAN.md (Tilt workflow)
 Resume file: None
