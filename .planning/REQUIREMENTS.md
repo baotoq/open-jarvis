@@ -34,7 +34,7 @@
 
 ### Memory
 
-- [ ] **MEM-01**: User can search past conversations via full-text keyword search (SQLite FTS5)
+- [x] **MEM-01**: User can search past conversations via full-text keyword search (SQLite FTS5)
 
 ## v2 Requirements
 
@@ -96,7 +96,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-01 | Phase 3 | Complete |
 | UI-02 | Phase 2 | Complete |
 | UI-03 | Phase 5 | Pending |
-| MEM-01 | Phase 5 | Pending |
+| MEM-01 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 14 total
