@@ -8,3 +8,12 @@ Model:
   SystemPrompt: "You are Jarvis, a personal AI assistant. Be concise and helpful."
 MaxToolCalls: 10
 TurnTimeoutSeconds: 60
+# WorkspaceRoot is the root directory for read_file/write_file operations (default: ".")
+WorkspaceRoot: "."
+# ShellAllowlist: patterns for commands that are auto-approved (no user confirmation needed)
+# ShellAllowlist: []
+# ShellDenylist: patterns for commands that always require approval (evaluated before allowlist)
+ShellDenylist:
+  - "rm *"
+  - "sudo *"
+  - "curl *"

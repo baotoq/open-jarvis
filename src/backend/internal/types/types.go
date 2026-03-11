@@ -19,3 +19,9 @@ type MessageResponse struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
 }
+
+// ApproveRequest is the request body for POST /api/chat/approve.
+type ApproveRequest struct {
+	ApprovalID string `json:"approvalId"`
+	Approved   bool   `json:"approved"`
+}

@@ -31,6 +31,7 @@ func main() {
 	}, rest.WithSSE())
 
 	server.AddRoutes([]rest.Route{
+		{Method: http.MethodPost, Path: "/api/chat/approve", Handler: handler.ApproveHandler(svcCtx)},
 		{Method: http.MethodGet, Path: "/api/conversations", Handler: handler.ListConversationsHandler(svcCtx)},
 		{Method: http.MethodGet, Path: "/api/conversations/:id", Handler: handler.GetConversationHandler(svcCtx)},
 		{Method: http.MethodGet, Path: "/api/conversations/:id/messages", Handler: handler.GetConversationMessagesHandler(svcCtx)},
