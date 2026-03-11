@@ -96,10 +96,14 @@ Plans:
   1. User can add, edit, and switch between model providers (OpenAI, Ollama, Anthropic) from a settings page without editing config files
   2. User can configure API keys, model names, and preferences through the settings UI
   3. User can search across all past conversations by keyword and jump to matching results
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — FTS5 migration + SearchConversations method in SQLiteConvStore (MEM-01)
+- [ ] 05-02-PLAN.md — ConfigStore svc + wire configPath into ServiceContext and main.go (CHAT-04)
+- [ ] 05-03-PLAN.md — Config + search API handlers, logic, types, route registration (CHAT-04, MEM-01)
+- [ ] 05-04-PLAN.md — Settings page (/settings) + Sidebar search input + api.ts additions (UI-03, MEM-01)
+- [ ] 05-05-PLAN.md — Verification: human browser test — settings save+persist, search results, navigation (CHAT-04, UI-03, MEM-01)
 
 ## Progress
 
@@ -112,4 +116,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Conversation Persistence | 2/5 | In Progress|  |
 | 3. File and Shell Tools | 4/5 | In Progress|  |
 | 4. Web Tools and Audit | 3/4 | In Progress|  |
-| 5. Configuration and Search | 0/1 | Not started | - |
+| 5. Configuration and Search | 0/5 | Not started | - |
