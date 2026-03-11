@@ -17,3 +17,6 @@ ShellDenylist:
   - "rm *"
   - "sudo *"
   - "curl *"
+# Web Tools
+# BraveSearchAPIKey: ""  # Get from https://api-dashboard.search.brave.com — optional, enables web_search tool
+# WebFetchTimeoutSeconds: 30

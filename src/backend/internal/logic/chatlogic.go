@@ -59,6 +59,28 @@ var chatTools = []openai.Tool{
 			"required": []string{"command"},
 		},
 	}},
+	{Type: openai.ToolTypeFunction, Function: &openai.FunctionDefinition{
+		Name:        "web_fetch",
+		Description: "Fetch and extract readable text content from a web page URL",
+		Parameters: map[string]any{
+			"type": "object",
+			"properties": map[string]any{
+				"url": map[string]any{"type": "string", "description": "Full URL including https://"},
+			},
+			"required": []string{"url"},
+		},
+	}},
+	{Type: openai.ToolTypeFunction, Function: &openai.FunctionDefinition{
+		Name:        "web_search",
+		Description: "Search the web and return result titles, URLs, and descriptions",
+		Parameters: map[string]any{
+			"type": "object",
+			"properties": map[string]any{
+				"query": map[string]any{"type": "string", "description": "Search query string"},
+			},
+			"required": []string{"query"},
+		},
+	}},
 }
 
 // ChatLogic handles the streaming LLM call and conversation management.
@@ -241,6 +263,10 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 						gateErr := l.waitForApproval(ctx, w, flusher, approvalID, shellArgs.Command)
 						if gateErr != nil {
 							resultContent = fmt.Sprintf("error: %s", gateErr.Error())
+							// Audit the denial
+							if l.svcCtx.AuditStore != nil {
+								_ = l.svcCtx.AuditStore.Log(req.SessionId, tc.Function.Name, tc.Function.Arguments, "", resultContent)
+							}
 							// Emit tool_result with denial
 							toolResultEvent, _ := json.Marshal(map[string]any{
 								"type":    "tool_result",
@@ -267,6 +293,14 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				resultContent = result.Error
 			} else {
 				resultContent = result.Content
+			}
+			// Audit the tool execution
+			if l.svcCtx.AuditStore != nil {
+				auditResult := result.Content
+				if len(auditResult) > 2000 {
+					auditResult = auditResult[:2000] + "[truncated]"
+				}
+				_ = l.svcCtx.AuditStore.Log(req.SessionId, tc.Function.Name, tc.Function.Arguments, auditResult, result.Error)
 			}
 
 			// Emit tool_result SSE event
