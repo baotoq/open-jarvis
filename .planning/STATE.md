@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-03-11T13:51:06.380Z"
+stopped_at: Completed 02-04-PLAN.md
+last_updated: "2026-03-11T13:54:55.499Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 8
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [..........] 0%
 | Phase 02-conversation-persistence P02 | 173s | 2 tasks | 11 files |
 | Phase 02-conversation-persistence P01 | 3 | 2 tasks | 9 files |
 | Phase 02-conversation-persistence P03 | 298s | 2 tasks | 15 files |
+| Phase 02-conversation-persistence P04 | 2min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 02-conversation-persistence]: ServiceContext.Store replaces ConvStore field; ConversationStore interface enables SQLite and in-memory implementations
 - [Phase 02-conversation-persistence]: UUID assigned via Store.Get(id)==empty check rather than GetConversation(id)==nil, because in-memory ConvStore GetConversation stub always returns nil
 - [Phase 02-conversation-persistence]: pathvar.WithVars used to inject go-zero path params into httptest.Request for handler unit tests without full router
+- [Phase 02-conversation-persistence]: effectiveConvId = activeConvId ?? sessionId avoids extra useEffect for syncing localStorage session on mount
+- [Phase 02-conversation-persistence]: SSE client parses JSON.parse(data) to detect done event; text tokens fall through to catch block
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T13:51:06.377Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-03-11T13:54:55.496Z
+Stopped at: Completed 02-04-PLAN.md
 Resume file: None
