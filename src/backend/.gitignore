@@ -1,0 +1,16 @@
+# Binaries
+open-jarvis
+/bin/
+
+# SQLite database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Go test cache and coverage
+*.test
+*.out
+coverage.html
+
+# Build artifacts
+dist/
