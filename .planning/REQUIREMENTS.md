@@ -9,7 +9,7 @@
 
 - [x] **CHAT-01**: User can send a message and receive a streaming token-by-token response
 - [x] **CHAT-02**: Agent maintains multi-turn conversation context within a session
-- [ ] **CHAT-03**: Conversations are persisted to SQLite and survive restarts
+- [x] **CHAT-03**: Conversations are persisted to SQLite and survive restarts
 - [ ] **CHAT-04**: User can configure and switch between OpenAI-compatible model providers (OpenAI, Ollama, Anthropic)
 
 ### Agent Tools
@@ -83,7 +83,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | CHAT-01 | Phase 1 | Complete |
 | CHAT-02 | Phase 1 | Complete |
-| CHAT-03 | Phase 2 | Pending |
+| CHAT-03 | Phase 2 | Complete |
 | CHAT-04 | Phase 5 | Pending |
 | TOOL-01 | Phase 3 | Pending |
 | TOOL-02 | Phase 3 | Pending |
