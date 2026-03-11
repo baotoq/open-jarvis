@@ -9,7 +9,7 @@ open-jarvis is a personal AI assistant inspired by OpenClaw, built as separate G
 ## Architecture
 
 - **Backend**: Go service using the [go-zero](https://go-zero.dev) framework — handles API, logic, and AI integrations
-- **Frontend**: Next.js (TypeScript) application — the user-facing UI (not yet implemented)
+- **Frontend**: Next.js (TypeScript) application — the user-facing UI (`src/frontend/`)
 
 The two services are **decoupled** and communicate over HTTP/RPC. Changes to one do not require changes to the other unless the API contract changes.
 
@@ -30,16 +30,23 @@ go mod tidy                        # clean dependencies
 ```
 
 ### TypeScript / Next.js (Frontend)
-> Frontend not yet implemented.
+> Run all frontend commands from the `src/frontend/` directory.
+
+```bash
+cd src/frontend
+npm run dev      # dev server (http://localhost:3000)
+npm run build    # production build
+npm run lint     # lint
+```
 
 ## Conventions
 
 - Go: `gofmt` style, explicit error returns, go-zero Handler→Logic→ServiceContext pattern
 - Tests: use `github.com/stretchr/testify/assert` and `require` (not raw `t.Errorf`)
-- TypeScript (future): strict mode, Next.js App Router, PascalCase components
+- TypeScript: strict mode, Next.js App Router, PascalCase components, Tailwind v4 CSS-first (`@import "tailwindcss"` in globals.css, no tailwind.config.ts)
 - Package manager for TypeScript: `npm`
 
-## Structure (Backend)
+## Structure
 
 ```
 src/
@@ -49,8 +56,13 @@ src/
 │   ├── config/                 # Config struct with defaults
 │   ├── handler/                # HTTP handlers (parse request, call logic)
 │   ├── logic/                  # Business logic (StreamChat SSE loop)
-│   ├── svc/                    # ServiceContext, ConvStore, AI client interface
+│   ├── svc/                    # ServiceContext, ConversationStore interface, SQLiteConvStore
 │   └── types/                  # Shared request/response types
+├── frontend/                   # Next.js 15 frontend (npm)
+│   ├── app/                    # App Router pages and layouts
+│   ├── components/             # Sidebar, ChatArea, shadcn/ui
+│   ├── hooks/                  # useSession (localStorage session management)
+│   └── lib/                    # api.ts (typed backend wrappers), utils.ts
 └── go.mod
 ```
 
