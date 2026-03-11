@@ -1,8 +1,9 @@
+// Package types provides shared request and response types for the open-jarvis HTTP API.
 package types
 
 // ChatRequest represents a single chat message from the client.
 type ChatRequest struct {
-	SessionId string `json:"sessionId"`
+	SessionID string `json:"sessionId"`
 	Message   string `json:"message"`
 }
 

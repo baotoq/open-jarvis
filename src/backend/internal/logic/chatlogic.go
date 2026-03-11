@@ -98,7 +98,7 @@ func NewChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ChatLogic {
 // StreamChat performs the agentic streaming LLM call, writing SSE tokens to w.
 // It prepends the system prompt for new sessions, appends conversation history,
 // and stores the assembled response in the Store after completion.
-// When req.SessionId is empty, a UUID is assigned and a new conversation is created.
+// When req.SessionID is empty, a UUID is assigned and a new conversation is created.
 // A final SSE done event carrying the session ID is emitted after streaming completes.
 // The agentic loop calls tools (read_file, write_file, shell_run) when the model
 // requests them, appending results to history and re-calling the model up to
@@ -110,13 +110,13 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 
 	// Determine if this is a new session or an existing one.
 	isNewSession := false
-	if req.SessionId == "" {
-		req.SessionId = uuid.New().String()
+	if req.SessionID == "" {
+		req.SessionID = uuid.New().String()
 		isNewSession = true
 	}
 
 	// Build message history with system prompt for new sessions
-	history := l.svcCtx.Store.Get(req.SessionId)
+	history := l.svcCtx.Store.Get(req.SessionID)
 	if len(history) == 0 {
 		isNewSession = true
 		history = append(history, openai.ChatCompletionMessage{
@@ -278,7 +278,7 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 							resultContent = fmt.Sprintf("error: %s", gateErr.Error())
 							// Audit the denial
 							if l.svcCtx.AuditStore != nil {
-								_ = l.svcCtx.AuditStore.Log(req.SessionId, tc.Function.Name, tc.Function.Arguments, "", resultContent)
+								_ = l.svcCtx.AuditStore.Log(req.SessionID, tc.Function.Name, tc.Function.Arguments, "", resultContent)
 							}
 							// Emit tool_result with denial
 							toolResultEvent, _ := json.Marshal(map[string]any{
@@ -315,7 +315,7 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				if len(auditResult) > 2000 {
 					auditResult = auditResult[:2000] + "[truncated]"
 				}
-				_ = l.svcCtx.AuditStore.Log(req.SessionId, tc.Function.Name, tc.Function.Arguments, auditResult, result.Error)
+				_ = l.svcCtx.AuditStore.Log(req.SessionID, tc.Function.Name, tc.Function.Arguments, auditResult, result.Error)
 			}
 
 			// Emit tool_result SSE event
@@ -344,7 +344,7 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 		Role:    openai.ChatMessageRoleAssistant,
 		Content: finalContent,
 	})
-	l.svcCtx.Store.Set(req.SessionId, history)
+	l.svcCtx.Store.Set(req.SessionID, history)
 
 	// Create the conversation record for new sessions
 	if isNewSession {
@@ -353,11 +353,11 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 			runes = runes[:50]
 		}
 		title := string(runes)
-		_ = l.svcCtx.Store.CreateConversation(req.SessionId, title)
+		_ = l.svcCtx.Store.CreateConversation(req.SessionID, title)
 	}
 
 	// Emit the done event with the session ID
-	if _, err := fmt.Fprintf(w, "data: {\"done\":true,\"sessionId\":\"%s\"}\n\n", req.SessionId); err != nil {
+	if _, err := fmt.Fprintf(w, "data: {\"done\":true,\"sessionId\":\"%s\"}\n\n", req.SessionID); err != nil {
 		log.Printf("chatlogic: write done frame: %v", err)
 	}
 	flusher.Flush()

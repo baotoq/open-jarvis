@@ -171,7 +171,7 @@ func TestStreamChatWritesTokens(t *testing.T) {
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 
 	w := httptest.NewRecorder()
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s1", Message: "hi"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s1", Message: "hi"}, w)
 	require.NoError(t, err)
 
 	body := w.Body.String()
@@ -187,12 +187,12 @@ func TestStreamChatUpdatesHistory(t *testing.T) {
 	w := httptest.NewRecorder()
 	// Use a pointer so we can read the assigned session ID after StreamChat.
 	// When no prior messages exist for an ID, a new UUID is assigned.
-	req := &types.ChatRequest{SessionId: "", Message: "say hello"}
+	req := &types.ChatRequest{SessionID: "", Message: "say hello"}
 	err := l.StreamChat(req, w)
 	require.NoError(t, err)
-	require.NotEmpty(t, req.SessionId)
+	require.NotEmpty(t, req.SessionID)
 
-	history := svcCtx.Store.Get(req.SessionId)
+	history := svcCtx.Store.Get(req.SessionID)
 	// system + user + assistant
 	require.Len(t, history, 3)
 	assert.Equal(t, openai.ChatMessageRoleUser, history[1].Role)
@@ -207,7 +207,7 @@ func TestStreamChatTimeout(t *testing.T) {
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 
 	w := httptest.NewRecorder()
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s3", Message: "timeout"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s3", Message: "timeout"}, w)
 	assert.Error(t, err)
 	assert.Contains(t, w.Body.String(), "data: [ERROR]")
 }
@@ -231,7 +231,7 @@ func TestStreamChatSystemPrompt(t *testing.T) {
 
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 	w := httptest.NewRecorder()
-	_ = l.StreamChat(&types.ChatRequest{SessionId: "s4", Message: "hello"}, w)
+	_ = l.StreamChat(&types.ChatRequest{SessionID: "s4", Message: "hello"}, w)
 
 	require.GreaterOrEqual(t, len(capturedMessages), 2, "expected at least 2 messages (system + user)")
 	assert.Equal(t, openai.ChatMessageRoleSystem, capturedMessages[0].Role)
@@ -243,12 +243,12 @@ func TestStreamChatNewSession(t *testing.T) {
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 
 	w := httptest.NewRecorder()
-	req := &types.ChatRequest{SessionId: "", Message: "tell me something"}
+	req := &types.ChatRequest{SessionID: "", Message: "tell me something"}
 	err := l.StreamChat(req, w)
 	require.NoError(t, err)
 
-	// SessionId should be assigned a UUID
-	assert.NotEmpty(t, req.SessionId, "expected SessionId to be assigned")
+	// SessionID should be assigned a UUID
+	assert.NotEmpty(t, req.SessionID, "expected SessionID to be assigned")
 
 	// Store should have exactly one conversation
 	convs, err := svcCtx.Store.ListConversations()
@@ -272,12 +272,12 @@ func TestStreamChatExistingSession(t *testing.T) {
 
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 	w := httptest.NewRecorder()
-	req := &types.ChatRequest{SessionId: existingID, Message: "follow up"}
+	req := &types.ChatRequest{SessionID: existingID, Message: "follow up"}
 	err := l.StreamChat(req, w)
 	require.NoError(t, err)
 
 	// Session ID should remain unchanged
-	assert.Equal(t, existingID, req.SessionId)
+	assert.Equal(t, existingID, req.SessionID)
 
 	// Conversation should still exist with original title
 	conv, err := svcCtx.Store.GetConversation(existingID)
@@ -394,7 +394,7 @@ func TestChatLogic_ToolLoop(t *testing.T) {
 
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 	w := httptest.NewRecorder()
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s-tool", Message: "read foo"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s-tool", Message: "read foo"}, w)
 	require.NoError(t, err)
 
 	body := w.Body.String()
@@ -481,7 +481,7 @@ func TestChatLogic_ApprovalGate(t *testing.T) {
 		done <- nil
 	}()
 
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s-approve", Message: "run ls"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s-approve", Message: "run ls"}, w)
 	<-done
 
 	require.NoError(t, err)
@@ -541,7 +541,7 @@ func TestChatLogic_ApprovalDenied(t *testing.T) {
 		done <- nil
 	}()
 
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s-denied", Message: "delete everything"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s-denied", Message: "delete everything"}, w)
 	<-done
 
 	require.NoError(t, err)

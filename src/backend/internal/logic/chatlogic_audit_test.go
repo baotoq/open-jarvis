@@ -41,7 +41,7 @@ func TestChatTools_WebToolsRegistered(t *testing.T) {
 
 		l := logic.NewChatLogic(context.Background(), svcCtx)
 		w := httptest.NewRecorder()
-		err := l.StreamChat(&types.ChatRequest{SessionId: "s-wf", Message: "fetch something"}, w)
+		err := l.StreamChat(&types.ChatRequest{SessionID: "s-wf", Message: "fetch something"}, w)
 		require.NoError(t, err)
 
 		body := w.Body.String()
@@ -73,7 +73,7 @@ func TestChatTools_WebToolsRegistered(t *testing.T) {
 
 		l := logic.NewChatLogic(context.Background(), svcCtx)
 		w := httptest.NewRecorder()
-		err := l.StreamChat(&types.ChatRequest{SessionId: "s-ws", Message: "search something"}, w)
+		err := l.StreamChat(&types.ChatRequest{SessionID: "s-ws", Message: "search something"}, w)
 		require.NoError(t, err)
 
 		body := w.Body.String()
@@ -112,7 +112,7 @@ func TestChatLogic_AuditLogAfterExecute(t *testing.T) {
 
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 	w := httptest.NewRecorder()
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s-audit", Message: "read foo"}, w)
+	err := l.StreamChat(&types.ChatRequest{SessionID: "s-audit", Message: "read foo"}, w)
 	require.NoError(t, err)
 
 	// AuditStore.Log should have been called once for the read_file execution.
@@ -159,7 +159,7 @@ func TestChatLogic_AuditLogNilGuard(t *testing.T) {
 
 	// Must not panic when AuditStore is nil — nil-guard in chatlogic.go protects this.
 	assert.NotPanics(t, func() {
-		_ = l.StreamChat(&types.ChatRequest{SessionId: "s-nilguard", Message: "read foo"}, w)
+		_ = l.StreamChat(&types.ChatRequest{SessionID: "s-nilguard", Message: "read foo"}, w)
 	})
 	body := w.Body.String()
 	assert.Contains(t, body, `"done":true`)
