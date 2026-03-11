@@ -123,7 +123,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 **Goal:** golangci-lint runs cleanly on the Go backend with zero issues; errcheck, revive, unused, ineffassign, and staticcheck violations are all fixed
 **Requirements**: lint-install, lint-config, errcheck-fixes, revive-fixes, unused-fixes, ineffassign-fixes, lint-clean-exit
 **Depends on:** Phase 5
-**Plans:** 2/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [ ] 06-01-PLAN.md — Install golangci-lint v2.11.3 + write .golangci.yml + update CLAUDE.md (lint-install, lint-config)
@@ -145,8 +145,8 @@ Plans:
 
 ### Phase 8: add tilt
 
-**Goal:** [To be planned]
-**Requirements**: TBD
+**Goal:** Add Tilt for local development workflow — single `tilt up` starts Go backend (via air) and Next.js frontend as bare local processes with live reload
+**Requirements**: Developer tooling — no v1 requirements mapped
 **Depends on:** Phase 7
 **Plans:** 0 plans
 
