@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
+milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Phase 7 context gathered
-last_updated: "2026-03-11T18:20:40.671Z"
+stopped_at: Completed 06-add-go-linting-01-PLAN.md
+last_updated: "2026-03-11T18:30:09.695Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 7
   completed_phases: 1
-  total_plans: 23
-  completed_plans: 17
+  total_plans: 29
+  completed_plans: 18
   percent: 0
 ---
 
@@ -67,6 +67,7 @@ Progress: [..........] 0%
 | Phase 05-configuration-and-search P03 | 12min | 2 tasks | 13 files |
 | Phase 05-configuration-and-search P04 | 152s | 2 tasks | 4 files |
 | Phase 05-configuration-and-search P05 | 1min | 1 tasks | 0 files |
+| Phase 06-add-go-linting P01 | 107s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase 05-configuration-and-search]: Search handler returns [] not null for empty/no-match queries; nil guard in handler after logic returns nil
 - [Phase 05-configuration-and-search]: useRef<T | undefined>(undefined) used for debounce timer ref — useRef<T>() without initial value fails strict TypeScript as of React 19 type definitions
 - [Phase 05-configuration-and-search]: auto-advance active: human-verify checkpoint auto-approved for Phase 5 end-to-end browser verification
+- [Phase 06-add-go-linting]: golangci-lint installed via official install script not go install — go install compiles with local toolchain which is older than go.mod's declared go 1.26
+- [Phase 06-add-go-linting]: staticcheck SA5008 excluded at config level for go-zero struct tag extensions (default=, optional) — false positives, not code bugs
+- [Phase 06-add-go-linting]: revive blank-imports excluded only for svc/servicecontext.go path — SQLite driver registration requires intentional blank import
 
 ### Roadmap Evolution
 
@@ -126,6 +130,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T18:20:40.662Z
-Stopped at: Phase 7 context gathered
-Resume file: .planning/phases/07-group-be-to-related-domain-instead-of-flat/07-CONTEXT.md
+Last session: 2026-03-11T18:30:09.692Z
+Stopped at: Completed 06-add-go-linting-01-PLAN.md
+Resume file: None
