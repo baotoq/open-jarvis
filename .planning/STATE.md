@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Completed 06-add-go-linting-01-PLAN.md
-last_updated: "2026-03-11T18:30:09.695Z"
+stopped_at: Completed 06-add-go-linting-02-PLAN.md
+last_updated: "2026-03-11T18:37:28.432Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 29
-  completed_plans: 18
+  completed_plans: 19
   percent: 0
 ---
 
@@ -68,6 +68,7 @@ Progress: [..........] 0%
 | Phase 05-configuration-and-search P04 | 152s | 2 tasks | 4 files |
 | Phase 05-configuration-and-search P05 | 1min | 1 tasks | 0 files |
 | Phase 06-add-go-linting P01 | 107s | 2 tasks | 2 files |
+| Phase 06-add-go-linting P02 | 294s | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -114,6 +115,8 @@ Recent decisions affecting current work:
 - [Phase 06-add-go-linting]: golangci-lint installed via official install script not go install — go install compiles with local toolchain which is older than go.mod's declared go 1.26
 - [Phase 06-add-go-linting]: staticcheck SA5008 excluded at config level for go-zero struct tag extensions (default=, optional) — false positives, not code bugs
 - [Phase 06-add-go-linting]: revive blank-imports excluded only for svc/servicecontext.go path — SQLite driver registration requires intentional blank import
+- [Phase 06-add-go-linting]: SSE write errors return nil (stop streaming silently) on connection close; error-frame write failures are logged
+- [Phase 06-add-go-linting]: nolint:errcheck used for test cleanup (db.Close, rows.Close) — errors logged by sql driver; tx.Rollback() failures logged via log.Printf
 
 ### Roadmap Evolution
 
@@ -130,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T18:30:09.692Z
-Stopped at: Completed 06-add-go-linting-01-PLAN.md
+Last session: 2026-03-11T18:37:22.565Z
+Stopped at: Completed 06-add-go-linting-02-PLAN.md
 Resume file: None

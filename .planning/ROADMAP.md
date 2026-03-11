@@ -123,7 +123,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 **Goal:** golangci-lint runs cleanly on the Go backend with zero issues; errcheck, revive, unused, ineffassign, and staticcheck violations are all fixed
 **Requirements**: lint-install, lint-config, errcheck-fixes, revive-fixes, unused-fixes, ineffassign-fixes, lint-clean-exit
 **Depends on:** Phase 5
-**Plans:** 4 plans
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 06-01-PLAN.md — Install golangci-lint v2.11.3 + write .golangci.yml + update CLAUDE.md (lint-install, lint-config)
