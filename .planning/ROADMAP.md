@@ -153,4 +153,4 @@ Plans:
 **Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 08-01-PLAN.md — Tiltfile + .air.toml + .gitignore update + README prerequisites + human smoke test (DEV-01 through DEV-06)
+- [x] 08-01-PLAN.md — Tiltfile + .air.toml + .gitignore update + README prerequisites + human smoke test (DEV-01 through DEV-06)
