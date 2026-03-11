@@ -1,0 +1,8 @@
+# SQLite database files (data directory is tracked via .gitkeep)
+src/data/*.db
+src/data/*.db-shm
+src/data/*.db-wal
+
+# Next.js
+frontend/.next/
+frontend/node_modules/
