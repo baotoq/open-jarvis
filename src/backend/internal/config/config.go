@@ -20,5 +20,7 @@ type Config struct {
 	DBPath             string   `json:",default=data/conversations.db"`
 	ShellAllowlist     []string `json:",optional"`
 	ShellDenylist      []string `json:",optional"`
-	WorkspaceRoot      string   `json:",default=."`
+	WorkspaceRoot             string   `json:",default=."`
+	BraveSearchAPIKey         string   `json:",optional"`
+	WebFetchTimeoutSeconds    int      `json:",default=30"`
 }
