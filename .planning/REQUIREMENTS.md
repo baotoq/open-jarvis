@@ -28,7 +28,7 @@
 
 ### Web Dashboard
 
-- [ ] **UI-01**: Chat interface shows tool calls and their results inline alongside messages
+- [x] **UI-01**: Chat interface shows tool calls and their results inline alongside messages
 - [x] **UI-02**: Conversation history sidebar lets user browse and switch past conversations
 - [ ] **UI-03**: Settings UI lets user configure model provider, API keys, and preferences
 
@@ -93,7 +93,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SAFE-02 | Phase 3 | Complete |
 | SAFE-03 | Phase 1 | Complete |
 | SAFE-04 | Phase 4 | Pending |
-| UI-01 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Complete |
 | UI-02 | Phase 2 | Complete |
 | UI-03 | Phase 5 | Pending |
 | MEM-01 | Phase 5 | Pending |
