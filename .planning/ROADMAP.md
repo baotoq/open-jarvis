@@ -103,7 +103,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Streaming Chat Loop | 1/3 | In Progress|  |
-| 2. Conversation Persistence | 0/5 | Not started | - |
+| 2. Conversation Persistence | 2/5 | In Progress|  |
 | 3. File and Shell Tools | 0/2 | Not started | - |
 | 4. Web Tools and Audit | 0/1 | Not started | - |
 | 5. Configuration and Search | 0/1 | Not started | - |
