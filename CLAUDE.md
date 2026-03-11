@@ -16,10 +16,10 @@ The two services are **decoupled** and communicate over HTTP/RPC. Changes to one
 ## Commands
 
 ### Go (Backend)
-> Run all Go commands from the `src/` directory.
+> Run all Go commands from the `src/backend/` directory.
 
 ```bash
-cd src
+cd src/backend
 go build ./...                     # build
 go run ./cmd/main.go               # run server (reads etc/config.yaml)
 go test ./...                      # test all
@@ -50,20 +50,21 @@ npm run lint     # lint
 
 ```
 src/
-├── cmd/main.go                 # entry point
-├── etc/config.yaml             # runtime config (model URL, system prompt, timeouts)
-├── internal/
-│   ├── config/                 # Config struct with defaults
-│   ├── handler/                # HTTP handlers (parse request, call logic)
-│   ├── logic/                  # Business logic (StreamChat SSE loop)
-│   ├── svc/                    # ServiceContext, ConversationStore interface, SQLiteConvStore
-│   └── types/                  # Shared request/response types
-├── frontend/                   # Next.js 15 frontend (npm)
-│   ├── app/                    # App Router pages and layouts
-│   ├── components/             # Sidebar, ChatArea, shadcn/ui
-│   ├── hooks/                  # useSession (localStorage session management)
-│   └── lib/                    # api.ts (typed backend wrappers), utils.ts
-└── go.mod
+├── backend/                    # Go service (go-zero)
+│   ├── cmd/main.go             # entry point
+│   ├── etc/config.yaml         # runtime config (model URL, system prompt, timeouts)
+│   ├── internal/
+│   │   ├── config/             # Config struct with defaults
+│   │   ├── handler/            # HTTP handlers (parse request, call logic)
+│   │   ├── logic/              # Business logic (StreamChat SSE loop)
+│   │   ├── svc/                # ServiceContext, ConversationStore interface, SQLiteConvStore
+│   │   └── types/              # Shared request/response types
+│   └── go.mod
+└── frontend/                   # Next.js 15 frontend (npm)
+    ├── app/                    # App Router pages and layouts
+    ├── components/             # Sidebar, ChatArea, shadcn/ui
+    ├── hooks/                  # useSession (localStorage session management)
+    └── lib/                    # api.ts (typed backend wrappers), utils.ts
 ```
 
 ## Gotchas
