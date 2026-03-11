@@ -32,6 +32,7 @@ type ServiceContext struct {
 	Executor      toolexec.Executor
 	ApprovalStore *ApprovalStore
 	ShellTool     *toolexec.ShellTool
+	AuditStore    *AuditStore
 }
 
 // NewServiceContext creates a new ServiceContext with a real OpenAI-compatible client.
@@ -45,6 +46,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	client := openai.NewClientWithConfig(cfg)
 
 	var store ConversationStore
+	var auditStore *AuditStore
 	if c.DBPath != "" {
 		dsn := fmt.Sprintf("file:%s?_pragma=journal_mode(WAL)&_pragma=foreign_keys(ON)&_pragma=busy_timeout(5000)", c.DBPath)
 		db, err := sql.Open("sqlite", dsn)
@@ -55,16 +57,28 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		if err != nil {
 			log.Fatalf("migrate sqlite: %v", err)
 		}
+		auditStore, err = NewAuditStore(db)
+		if err != nil {
+			log.Fatalf("audit migrate: %v", err)
+		}
 	} else {
 		store = NewConvStore()
 	}
 
+	if c.BraveSearchAPIKey == "" {
+		log.Println("warning: BraveSearchAPIKey not set — web_search will return errors")
+	}
+
 	fileTool := toolexec.NewFileTool(c.WorkspaceRoot)
 	shellTool := toolexec.NewShellTool(c.ShellAllowlist, c.ShellDenylist)
+	webFetchTool := toolexec.NewWebFetchTool(c.WebFetchTimeoutSeconds)
+	webSearchTool := toolexec.NewWebSearchTool(c.BraveSearchAPIKey)
 	registry := toolexec.NewRegistry()
 	registry.Register("read_file", fileTool.ReadFile)
 	registry.Register("write_file", fileTool.WriteFile)
 	registry.Register("shell_run", shellTool.Run)
+	registry.Register("web_fetch", webFetchTool.Fetch)
+	registry.Register("web_search", webSearchTool.Search)
 
 	return &ServiceContext{
 		Config:        c,
@@ -73,18 +87,29 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Executor:      registry,
 		ApprovalStore: NewApprovalStore(),
 		ShellTool:     shellTool,
+		AuditStore:    auditStore,
 	}
 }
 
 // NewServiceContextForTest creates a ServiceContext with the provided AI client and store.
 // Used in tests to inject mock clients while still wiring real tool infrastructure.
+// Registers web tools (with empty API key — web_search returns "not configured" error in tests).
+// Wires an in-memory AuditStore so audit log calls don't panic.
 func NewServiceContextForTest(c config.Config, client AIStreamer, store ConversationStore) *ServiceContext {
 	fileTool := toolexec.NewFileTool(c.WorkspaceRoot)
 	shellTool := toolexec.NewShellTool(c.ShellAllowlist, c.ShellDenylist)
+	webFetchTool := toolexec.NewWebFetchTool(c.WebFetchTimeoutSeconds)
+	webSearchTool := toolexec.NewWebSearchTool(c.BraveSearchAPIKey)
 	registry := toolexec.NewRegistry()
 	registry.Register("read_file", fileTool.ReadFile)
 	registry.Register("write_file", fileTool.WriteFile)
 	registry.Register("shell_run", shellTool.Run)
+	registry.Register("web_fetch", webFetchTool.Fetch)
+	registry.Register("web_search", webSearchTool.Search)
+
+	db, _ := sql.Open("sqlite", ":memory:")
+	auditStore, _ := NewAuditStore(db)
+
 	return &ServiceContext{
 		Config:        c,
 		AIClient:      client,
@@ -92,6 +117,7 @@ func NewServiceContextForTest(c config.Config, client AIStreamer, store Conversa
 		Executor:      registry,
 		ApprovalStore: NewApprovalStore(),
 		ShellTool:     shellTool,
+		AuditStore:    auditStore,
 	}
 }
 
