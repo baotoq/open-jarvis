@@ -78,3 +78,7 @@ src/
 
 Refer to `.planning/codebase` for more info:
 `ARCHITECTURE.md` `CONCERNS.md` `CONVENTIONS.md` `INTEGRATIONS.md` `STACK.md` `STRUCTURE.md` `TESTING.md`
+
+## Docs
+
+Always use `Context7` MCP and `documentation-lookup` skills when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.

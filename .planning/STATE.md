@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-03-11T15:19:06.858Z"
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-03-11T15:25:29.194Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 17
-  completed_plans: 11
+  completed_plans: 12
   percent: 0
 ---
 
@@ -61,6 +61,7 @@ Progress: [..........] 0%
 | Phase 03-file-and-shell-tools P03 | 345s | 2 tasks | 7 files |
 | Phase 04-web-tools-and-audit P01 | 135s | 2 tasks | 5 files |
 | Phase 04-web-tools-and-audit P02 | 66 | 1 tasks | 2 files |
+| Phase 04-web-tools-and-audit PP03 | 4min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 04-web-tools-and-audit]: go-shiori/go-readability used despite deprecation notice; functional and on pkg.go.dev — migrate to codeberg.org/readeck/go-readability/v2 in a future phase if needed
 - [Phase 04-web-tools-and-audit]: WebSearchTool.baseURL exposed as struct field to allow httptest override in tests without changing the public NewWebSearchTool(apiKey) API
 - [Phase 04-web-tools-and-audit]: AuditStore uses same *sql.DB as SQLiteConvStore to avoid extra SQLite connection; empty strings stored as NOT NULL DEFAULT '' not NULL
+- [Phase 04-web-tools-and-audit]: AuditStore left nil in NewServiceContextWithClient to preserve backward compatibility with existing logic tests
+- [Phase 04-web-tools-and-audit]: NewServiceContextForTest creates in-memory AuditStore via :memory: SQLite so audit calls never panic in integration tests
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T15:19:06.854Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-03-11T15:25:29.191Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None

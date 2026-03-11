@@ -16,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "77dfbb28456b8b6452726ede57c4af42251e70844e549de67be566b699f263a3"
     },
+    "go-linting": {
+      "source": "cxuu/golang-skills",
+      "sourceType": "github",
+      "computedHash": "41effcb704d0836720d02ff497a8b4b5c76e41491612c22b36f67d87b42d3744"
+    },
     "go-naming": {
       "source": "cxuu/golang-skills",
       "sourceType": "github",

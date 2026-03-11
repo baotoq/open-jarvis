@@ -14,13 +14,13 @@ type ModelConfig struct {
 
 type Config struct {
 	rest.RestConf
-	Model              ModelConfig
-	MaxToolCalls       int      `json:",default=10"`
-	TurnTimeoutSeconds int      `json:",default=60"`
-	DBPath             string   `json:",default=data/conversations.db"`
-	ShellAllowlist     []string `json:",optional"`
-	ShellDenylist      []string `json:",optional"`
-	WorkspaceRoot             string   `json:",default=."`
-	BraveSearchAPIKey         string   `json:",optional"`
-	WebFetchTimeoutSeconds    int      `json:",default=30"`
+	Model                  ModelConfig
+	MaxToolCalls           int      `json:",default=10"`
+	TurnTimeoutSeconds     int      `json:",default=60"`
+	DBPath                 string   `json:",default=data/conversations.db"`
+	ShellAllowlist         []string `json:",optional"`
+	ShellDenylist          []string `json:",optional"`
+	WorkspaceRoot          string   `json:",default=."`
+	BraveSearchAPIKey      string   `json:",optional"`
+	WebFetchTimeoutSeconds int      `json:",default=30"`
 }
