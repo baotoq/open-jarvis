@@ -30,7 +30,7 @@
 
 - [x] **UI-01**: Chat interface shows tool calls and their results inline alongside messages
 - [x] **UI-02**: Conversation history sidebar lets user browse and switch past conversations
-- [ ] **UI-03**: Settings UI lets user configure model provider, API keys, and preferences
+- [x] **UI-03**: Settings UI lets user configure model provider, API keys, and preferences
 
 ### Memory
 
@@ -95,7 +95,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SAFE-04 | Phase 4 | Complete |
 | UI-01 | Phase 3 | Complete |
 | UI-02 | Phase 2 | Complete |
-| UI-03 | Phase 5 | Pending |
+| UI-03 | Phase 5 | Complete |
 | MEM-01 | Phase 5 | Complete |
 
 **Coverage:**
