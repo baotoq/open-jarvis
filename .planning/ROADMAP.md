@@ -29,11 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. User can send follow-up messages and the agent responds with awareness of the full conversation so far
   3. Agent loop terminates automatically when it exceeds a configurable max tool calls or timeout limit
   4. Go backend starts as a single binary and serves both the API and the Next.js frontend assets
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Go backend: config, conversation store, SSE handler, streaming chat logic (CHAT-01, CHAT-02, SAFE-03)
+- [ ] 01-02-PLAN.md — Next.js frontend: scaffold, chat components, SSE client, session management (CHAT-01)
+- [ ] 01-03-PLAN.md — Integration: embed frontend into Go binary, end-to-end browser verification (CHAT-01, CHAT-02, SAFE-03)
 
 ### Phase 2: Conversation Persistence
 **Goal**: Conversations survive restarts and users can browse and resume past conversations
@@ -97,7 +98,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Streaming Chat Loop | 0/2 | Not started | - |
+| 1. Streaming Chat Loop | 0/3 | Not started | - |
 | 2. Conversation Persistence | 0/1 | Not started | - |
 | 3. File and Shell Tools | 0/2 | Not started | - |
 | 4. Web Tools and Audit | 0/1 | Not started | - |
