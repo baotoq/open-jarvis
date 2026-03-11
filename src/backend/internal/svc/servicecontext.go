@@ -9,6 +9,7 @@ import (
 	_ "modernc.org/sqlite"
 	openai "github.com/sashabaranov/go-openai"
 	"open-jarvis/internal/config"
+	"open-jarvis/internal/toolexec"
 )
 
 // StreamRecver abstracts a single streaming response.
@@ -25,9 +26,12 @@ type AIStreamer interface {
 
 // ServiceContext holds all shared dependencies for the service.
 type ServiceContext struct {
-	Config   config.Config
-	AIClient AIStreamer
-	Store    ConversationStore
+	Config        config.Config
+	AIClient      AIStreamer
+	Store         ConversationStore
+	Executor      toolexec.Executor
+	ApprovalStore *ApprovalStore
+	ShellTool     *toolexec.ShellTool
 }
 
 // NewServiceContext creates a new ServiceContext with a real OpenAI-compatible client.
@@ -55,10 +59,39 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		store = NewConvStore()
 	}
 
+	fileTool := toolexec.NewFileTool(c.WorkspaceRoot)
+	shellTool := toolexec.NewShellTool(c.ShellAllowlist, c.ShellDenylist)
+	registry := toolexec.NewRegistry()
+	registry.Register("read_file", fileTool.ReadFile)
+	registry.Register("write_file", fileTool.WriteFile)
+	registry.Register("shell_run", shellTool.Run)
+
 	return &ServiceContext{
-		Config:   c,
-		AIClient: &realClient{client: client},
-		Store:    store,
+		Config:        c,
+		AIClient:      &realClient{client: client},
+		Store:         store,
+		Executor:      registry,
+		ApprovalStore: NewApprovalStore(),
+		ShellTool:     shellTool,
+	}
+}
+
+// NewServiceContextForTest creates a ServiceContext with the provided AI client and store.
+// Used in tests to inject mock clients while still wiring real tool infrastructure.
+func NewServiceContextForTest(c config.Config, client AIStreamer, store ConversationStore) *ServiceContext {
+	fileTool := toolexec.NewFileTool(c.WorkspaceRoot)
+	shellTool := toolexec.NewShellTool(c.ShellAllowlist, c.ShellDenylist)
+	registry := toolexec.NewRegistry()
+	registry.Register("read_file", fileTool.ReadFile)
+	registry.Register("write_file", fileTool.WriteFile)
+	registry.Register("shell_run", shellTool.Run)
+	return &ServiceContext{
+		Config:        c,
+		AIClient:      client,
+		Store:         store,
+		Executor:      registry,
+		ApprovalStore: NewApprovalStore(),
+		ShellTool:     shellTool,
 	}
 }
 
