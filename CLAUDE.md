@@ -26,6 +26,7 @@ go test ./...                      # test all
 go test -v -run TestName ./internal/...  # run specific test
 go test -cover ./...               # with coverage
 go vet ./...                       # static analysis
+golangci-lint run ./...            # lint (run from src/backend/)
 go mod tidy                        # clean dependencies
 ```
 

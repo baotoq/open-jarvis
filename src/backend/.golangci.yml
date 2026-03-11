@@ -1,0 +1,45 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - errcheck
+    - ineffassign
+    - staticcheck
+    - revive
+    - unused
+
+  settings:
+    revive:
+      rules:
+        - name: blank-imports
+        - name: context-as-argument
+        - name: error-return
+        - name: error-strings
+        - name: exported
+        - name: var-naming
+        - name: package-comments
+        - name: unused-parameter
+
+  exclusions:
+    rules:
+      # go-zero uses json struct tag extensions (default=, optional) that are
+      # unknown to staticcheck SA5008 — these are intentional and correct
+      - linters: [staticcheck]
+        text: "SA5008"
+      # SQLite driver must be registered via blank import; this is intentional
+      - linters: [revive]
+        text: "blank-imports"
+        path: "svc/servicecontext.go"
+
+formatters:
+  enable:
+    - goimports
+
+  settings:
+    goimports:
+      local-prefixes:
+        - open-jarvis
+
+run:
+  timeout: 5m
