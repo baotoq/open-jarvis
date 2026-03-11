@@ -4,7 +4,7 @@ milestone: v2.11
 milestone_name: milestone
 status: planning
 stopped_at: Completed 07-03-PLAN.md (wire domain handlers, delete flat directories)
-last_updated: "2026-03-11T19:26:46.451Z"
+last_updated: "2026-03-11T19:29:53.046Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 8
