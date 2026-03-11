@@ -25,19 +25,18 @@ func newSearchTestStore(t *testing.T) (*svc.SQLiteConvStore, *sql.DB) {
 func TestFTSMigration(t *testing.T) {
 	_, db := newSearchTestStore(t)
 
-	// Verify fts5 extension is available
-	var version string
-	err := db.QueryRow(`SELECT fts5_version()`).Scan(&version)
-	require.NoError(t, err, "fts5_version() should return without error")
-	assert.NotEmpty(t, version)
-
-	// Verify messages_fts table exists
+	// Verify messages_fts virtual table exists in sqlite_master
 	var name string
-	err = db.QueryRow(
+	err := db.QueryRow(
 		`SELECT name FROM sqlite_master WHERE type='table' AND name='messages_fts'`,
 	).Scan(&name)
 	require.NoError(t, err, "messages_fts table should exist after migration")
 	assert.Equal(t, "messages_fts", name)
+
+	// Verify FTS5 is functional by running a simple MATCH query (no rows expected)
+	rows, err := db.Query(`SELECT rowid FROM messages_fts WHERE messages_fts MATCH ? LIMIT 1`, `"test"`)
+	require.NoError(t, err, "FTS5 MATCH query should execute without error")
+	rows.Close()
 }
 
 func TestFTSMigration_ExistingRows(t *testing.T) {

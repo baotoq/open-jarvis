@@ -2,10 +2,19 @@ package svc
 
 import (
 	"database/sql"
+	"strings"
 	"time"
 
 	openai "github.com/sashabaranov/go-openai"
 )
+
+// SearchResult holds a conversation match returned by SearchConversations.
+type SearchResult struct {
+	ConversationID string
+	Title          string
+	UpdatedAt      int64
+	Snippet        string
+}
 
 // SQLiteConvStore is a persistent conversation store backed by SQLite.
 type SQLiteConvStore struct {
@@ -40,8 +49,43 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 CREATE INDEX IF NOT EXISTS idx_messages_conv_id ON messages(conversation_id, position);
 `
-	_, err := s.db.Exec(schema)
-	return err
+	if _, err := s.db.Exec(schema); err != nil {
+		return err
+	}
+
+	// FTS5 virtual table for full-text search over message content.
+	// Split into separate Exec calls because the trigger BEGIN...END syntax
+	// does not work reliably in a single multi-statement Exec.
+	ftsStatements := []string{
+		`CREATE VIRTUAL TABLE IF NOT EXISTS messages_fts USING fts5(
+			content,
+			content='messages',
+			content_rowid='id'
+		)`,
+		`CREATE TRIGGER IF NOT EXISTS messages_ai AFTER INSERT ON messages BEGIN
+			INSERT INTO messages_fts(rowid, content) VALUES (new.id, new.content);
+		END`,
+		`CREATE TRIGGER IF NOT EXISTS messages_ad AFTER DELETE ON messages BEGIN
+			INSERT INTO messages_fts(messages_fts, rowid, content)
+				VALUES ('delete', old.id, old.content);
+		END`,
+		`CREATE TRIGGER IF NOT EXISTS messages_au AFTER UPDATE ON messages BEGIN
+			INSERT INTO messages_fts(messages_fts, rowid, content)
+				VALUES ('delete', old.id, old.content);
+			INSERT INTO messages_fts(rowid, content) VALUES (new.id, new.content);
+		END`,
+		// Initial populate: rebuild the FTS index from the content table.
+		// For FTS5 content tables, SELECT rowid FROM messages_fts reflects the
+		// underlying table even before explicit indexing, so the NOT IN guard
+		// does not work. Using 'rebuild' forces a full re-index idempotently.
+		`INSERT INTO messages_fts(messages_fts) VALUES('rebuild')`,
+	}
+	for _, stmt := range ftsStatements {
+		if _, err := s.db.Exec(stmt); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Get returns all messages for the given sessionID in order, or nil if not found.
@@ -171,4 +215,52 @@ func (s *SQLiteConvStore) CreateConversation(id, title string) error {
 		id, title, now, now,
 	)
 	return err
+}
+
+// SanitizeFTSQuery wraps user input in double-quotes and escapes internal
+// double-quotes for safe use in an FTS5 MATCH expression.
+// Returns "" for blank input, which callers should treat as "no search".
+func SanitizeFTSQuery(q string) string {
+	q = strings.TrimSpace(q)
+	if q == "" {
+		return ""
+	}
+	// Escape internal double-quotes by doubling them, then wrap in quotes.
+	escaped := strings.ReplaceAll(q, `"`, `""`)
+	return `"` + escaped + `"`
+}
+
+const searchSQL = `
+SELECT DISTINCT m.conversation_id, c.title, c.updated_at,
+       snippet(messages_fts, 0, '<b>', '</b>', '...', 20) AS snippet
+FROM messages_fts
+JOIN messages m ON messages_fts.rowid = m.id
+JOIN conversations c ON m.conversation_id = c.id
+WHERE messages_fts MATCH ?
+ORDER BY rank
+LIMIT 20`
+
+// SearchConversations returns up to 20 conversations whose messages match
+// the query string, ordered by FTS5 relevance rank.
+func (s *SQLiteConvStore) SearchConversations(query string) ([]SearchResult, error) {
+	sanitized := SanitizeFTSQuery(query)
+	if sanitized == "" {
+		return nil, nil
+	}
+
+	rows, err := s.db.Query(searchSQL, sanitized)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var results []SearchResult
+	for rows.Next() {
+		var r SearchResult
+		if err := rows.Scan(&r.ConversationID, &r.Title, &r.UpdatedAt, &r.Snippet); err != nil {
+			return nil, err
+		}
+		results = append(results, r)
+	}
+	return results, rows.Err()
 }
