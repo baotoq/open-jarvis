@@ -16,8 +16,8 @@
 
 - [x] **TOOL-01**: Agent can read and write local files on user's machine
 - [x] **TOOL-02**: Agent can execute shell commands (subject to safety controls)
-- [ ] **TOOL-03**: Agent can fetch and summarize web pages
-- [ ] **TOOL-04**: Agent can search the web and return results
+- [x] **TOOL-03**: Agent can fetch and summarize web pages
+- [x] **TOOL-04**: Agent can search the web and return results
 
 ### Safety
 
@@ -87,8 +87,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-04 | Phase 5 | Pending |
 | TOOL-01 | Phase 3 | Complete |
 | TOOL-02 | Phase 3 | Complete |
-| TOOL-03 | Phase 4 | Pending |
-| TOOL-04 | Phase 4 | Pending |
+| TOOL-03 | Phase 4 | Complete |
+| TOOL-04 | Phase 4 | Complete |
 | SAFE-01 | Phase 3 | Complete |
 | SAFE-02 | Phase 3 | Complete |
 | SAFE-03 | Phase 1 | Complete |

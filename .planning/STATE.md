@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-03-11T14:43:16.820Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-11T15:15:23.387Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 13
-  completed_plans: 9
+  total_plans: 17
+  completed_plans: 10
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [..........] 0%
 | Phase 03-file-and-shell-tools P02 | 130s | 2 tasks | 5 files |
 | Phase 03-file-and-shell-tools P04 | 185s | 2 tasks | 7 files |
 | Phase 03-file-and-shell-tools P03 | 345s | 2 tasks | 7 files |
+| Phase 04-web-tools-and-audit P01 | 135s | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,8 @@ Recent decisions affecting current work:
 - [Phase 03-file-and-shell-tools]: ToolResultPart skipped in standalone render loop — rendered via ToolCallBlock by pairing with matching ToolCallPart by id
 - [Phase 03-file-and-shell-tools]: waitForApproval extracted as helper method on ChatLogic to keep StreamChat readable
 - [Phase 03-file-and-shell-tools]: Tool denial errors surfaced in tool result content field, not Go error, to keep agentic loop running
+- [Phase 04-web-tools-and-audit]: go-shiori/go-readability used despite deprecation notice; functional and on pkg.go.dev — migrate to codeberg.org/readeck/go-readability/v2 in a future phase if needed
+- [Phase 04-web-tools-and-audit]: WebSearchTool.baseURL exposed as struct field to allow httptest override in tests without changing the public NewWebSearchTool(apiKey) API
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T14:43:16.817Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-03-11T15:15:23.385Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
