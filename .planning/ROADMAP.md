@@ -117,3 +117,26 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. File and Shell Tools | 4/5 | In Progress|  |
 | 4. Web Tools and Audit | 3/4 | In Progress|  |
 | 5. Configuration and Search | 5/5 | Complete   | 2026-03-11 |
+
+### Phase 6: add go-linting
+
+**Goal:** golangci-lint runs cleanly on the Go backend with zero issues; errcheck, revive, unused, ineffassign, and staticcheck violations are all fixed
+**Requirements**: lint-install, lint-config, errcheck-fixes, revive-fixes, unused-fixes, ineffassign-fixes, lint-clean-exit
+**Depends on:** Phase 5
+**Plans:** 4 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Install golangci-lint v2.11.3 + write .golangci.yml + update CLAUDE.md (lint-install, lint-config)
+- [ ] 06-02-PLAN.md — Fix 21 errcheck violations in chatlogic.go, sqlitestore.go, webtool.go, test files (errcheck-fixes)
+- [ ] 06-03-PLAN.md — Fix 20 revive + 2 unused + 1 ineffassign violations; rename SessionId to SessionID (revive-fixes, unused-fixes, ineffassign-fixes)
+- [ ] 06-04-PLAN.md — Final verification: golangci-lint exits 0 + go test -cover + human sign-off (lint-clean-exit)
+
+### Phase 7: group BE to related domain instead of flat
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 7 to break down)
