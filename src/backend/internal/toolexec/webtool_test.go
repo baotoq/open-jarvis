@@ -34,7 +34,7 @@ func TestWebFetchTool_InvalidArgsJSON(t *testing.T) {
 func TestWebFetchTool_FetchReturnsReadableText(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprint(w, `<!DOCTYPE html>
+		const htmlBody = `<!DOCTYPE html>
 <html>
 <head><title>Test Article Title</title></head>
 <body>
@@ -44,7 +44,8 @@ func TestWebFetchTool_FetchReturnsReadableText(t *testing.T) {
     <p>Another paragraph with more information.</p>
   </article>
 </body>
-</html>`)
+</html>`
+		fmt.Fprint(w, htmlBody) //nolint:errcheck // test handler; write errors are not relevant
 	}))
 	defer srv.Close()
 
@@ -118,7 +119,7 @@ func TestWebSearchTool_SuccessfulSearch(t *testing.T) {
 			{Title: "Go Packages", URL: "https://pkg.go.dev", Description: "Go package documentation."},
 			{Title: "Go Playground", URL: "https://play.golang.org", Description: "Try Go in your browser."},
 		}
-		json.NewEncoder(w).Encode(resp)
+		json.NewEncoder(w).Encode(resp) //nolint:errcheck // test handler; encode errors not relevant
 	}))
 	defer srv.Close()
 
@@ -155,7 +156,7 @@ func TestWebSearchTool_APIError(t *testing.T) {
 func TestWebSearchTool_EmptyResults(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		resp := braveSearchResponse{}
-		json.NewEncoder(w).Encode(resp)
+		json.NewEncoder(w).Encode(resp) //nolint:errcheck // test handler; encode errors not relevant
 	}))
 	defer srv.Close()
 

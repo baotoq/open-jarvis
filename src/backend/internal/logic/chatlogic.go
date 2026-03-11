@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -151,7 +152,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				Tools:    chatTools,
 			})
 		if err != nil {
-			fmt.Fprintf(w, "data: [ERROR] %s\n\n", err.Error())
+			if _, werr := fmt.Fprintf(w, "data: [ERROR] %s\n\n", err.Error()); werr != nil {
+				log.Printf("chatlogic: write error frame: %v", werr)
+			}
 			flusher.Flush()
 			return fmt.Errorf("create stream: %w", err)
 		}
@@ -162,14 +165,20 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 		var finishReason openai.FinishReason
 
 		recvErr := func() error {
-			defer stream.Close()
+			defer func() {
+				if cerr := stream.Close(); cerr != nil {
+					log.Printf("chatlogic: stream.Close: %v", cerr)
+				}
+			}()
 			for {
 				resp, err := stream.Recv()
 				if errors.Is(err, io.EOF) {
 					break
 				}
 				if err != nil {
-					fmt.Fprintf(w, "data: [ERROR] %s\n\n", err.Error())
+					if _, werr := fmt.Fprintf(w, "data: [ERROR] %s\n\n", err.Error()); werr != nil {
+						log.Printf("chatlogic: write error frame: %v", werr)
+					}
 					flusher.Flush()
 					return fmt.Errorf("stream recv: %w", err)
 				}
@@ -181,7 +190,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				// Accumulate text tokens
 				if delta.Content != "" {
 					textContent.WriteString(delta.Content)
-					fmt.Fprintf(w, "data: %s\n\n", delta.Content)
+					if _, err := fmt.Fprintf(w, "data: %s\n\n", delta.Content); err != nil {
+						return nil // connection closed; stop streaming
+					}
 					flusher.Flush()
 				}
 
@@ -248,7 +259,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				"name": tc.Function.Name,
 				"args": tc.Function.Arguments,
 			})
-			fmt.Fprintf(w, "data: %s\n\n", toolCallEvent)
+			if _, err := fmt.Fprintf(w, "data: %s\n\n", toolCallEvent); err != nil {
+				return nil // connection closed; stop streaming
+			}
 			flusher.Flush()
 
 			var resultContent string
@@ -273,7 +286,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 								"id":      tc.ID,
 								"content": resultContent,
 							})
-							fmt.Fprintf(w, "data: %s\n\n", toolResultEvent)
+							if _, err := fmt.Fprintf(w, "data: %s\n\n", toolResultEvent); err != nil {
+								return nil // connection closed; stop streaming
+							}
 							flusher.Flush()
 							// Append tool result to history
 							history = append(history, openai.ChatCompletionMessage{
@@ -309,7 +324,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 				"id":      tc.ID,
 				"content": resultContent,
 			})
-			fmt.Fprintf(w, "data: %s\n\n", toolResultEvent)
+			if _, err := fmt.Fprintf(w, "data: %s\n\n", toolResultEvent); err != nil {
+				return nil // connection closed; stop streaming
+			}
 			flusher.Flush()
 
 			// Append tool result to history
@@ -340,7 +357,9 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 	}
 
 	// Emit the done event with the session ID
-	fmt.Fprintf(w, "data: {\"done\":true,\"sessionId\":\"%s\"}\n\n", req.SessionId)
+	if _, err := fmt.Fprintf(w, "data: {\"done\":true,\"sessionId\":\"%s\"}\n\n", req.SessionId); err != nil {
+		log.Printf("chatlogic: write done frame: %v", err)
+	}
 	flusher.Flush()
 
 	return nil
@@ -360,7 +379,9 @@ func (l *ChatLogic) waitForApproval(ctx context.Context, w http.ResponseWriter, 
 		"tool":       "shell_run",
 		"command":    command,
 	})
-	fmt.Fprintf(w, "data: %s\n\n", event)
+	if _, err := fmt.Fprintf(w, "data: %s\n\n", event); err != nil {
+		return nil // connection closed
+	}
 	flusher.Flush()
 
 	select {

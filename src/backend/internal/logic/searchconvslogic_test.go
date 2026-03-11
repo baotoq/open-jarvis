@@ -19,7 +19,7 @@ func newInMemorySQLiteStore(t *testing.T) *svc.SQLiteConvStore {
 	t.Helper()
 	db, err := sql.Open("sqlite", ":memory:")
 	require.NoError(t, err)
-	t.Cleanup(func() { db.Close() })
+	t.Cleanup(func() { db.Close() }) //nolint:errcheck // cleanup in test; error logged by sql driver
 	store, err := svc.NewSQLiteConvStore(db)
 	require.NoError(t, err)
 	return store

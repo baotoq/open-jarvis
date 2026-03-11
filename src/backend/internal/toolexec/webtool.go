@@ -103,7 +103,7 @@ func (w *WebSearchTool) Search(ctx context.Context, argsJSON string) ToolResult 
 	if err != nil {
 		return ToolResult{Error: "search failed: " + err.Error()}
 	}
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // cleanup in defer; error logged by http client
 	if resp.StatusCode != http.StatusOK {
 		return ToolResult{Error: fmt.Sprintf("search API error: %d", resp.StatusCode)}
 	}
