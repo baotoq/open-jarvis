@@ -33,3 +33,29 @@ Port: 8888
 	assert.Equal(t, 10, cfg.MaxToolCalls)
 	assert.Equal(t, 60, cfg.TurnTimeoutSeconds)
 }
+
+func TestConfig_Defaults(t *testing.T) {
+	// Write a minimal YAML with only required RestConf fields
+	yaml := `Name: test
+Host: 0.0.0.0
+Port: 8888
+`
+	f, err := os.CreateTemp("", "config-*.yaml")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(f.Name())
+	if _, err := f.WriteString(yaml); err != nil {
+		t.Fatal(err)
+	}
+	f.Close()
+
+	var cfg config.Config
+	conf.MustLoad(f.Name(), &cfg)
+
+	// WorkspaceRoot defaults to "." via go-zero struct tag
+	assert.Equal(t, ".", cfg.WorkspaceRoot)
+	// ShellAllowlist and ShellDenylist are optional; zero value is nil
+	assert.Nil(t, cfg.ShellAllowlist)
+	assert.Nil(t, cfg.ShellDenylist)
+}

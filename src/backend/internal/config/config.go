@@ -15,7 +15,10 @@ type ModelConfig struct {
 type Config struct {
 	rest.RestConf
 	Model              ModelConfig
-	MaxToolCalls       int    `json:",default=10"`
-	TurnTimeoutSeconds int    `json:",default=60"`
-	DBPath             string `json:",default=data/conversations.db"`
+	MaxToolCalls       int      `json:",default=10"`
+	TurnTimeoutSeconds int      `json:",default=60"`
+	DBPath             string   `json:",default=data/conversations.db"`
+	ShellAllowlist     []string `json:",optional"`
+	ShellDenylist      []string `json:",optional"`
+	WorkspaceRoot      string   `json:",default=."`
 }
