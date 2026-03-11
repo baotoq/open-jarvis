@@ -66,6 +66,11 @@
       "sourceType": "github",
       "computedHash": "7ff2f4650597e98ca4cd8f01231fb432ab4d187d6b12e641485aa871a04448cc"
     },
+    "testcontainers-go": {
+      "source": "testcontainers/claude-skills",
+      "sourceType": "github",
+      "computedHash": "cd2d0205bfbdd95c46d8191202604c28f1862a406ef883488b084851da0c0501"
+    },
     "typescript-expert": {
       "source": "sickn33/antigravity-awesome-skills",
       "sourceType": "github",

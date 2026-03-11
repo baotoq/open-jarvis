@@ -73,7 +73,7 @@ Each task was committed atomically:
 1. **Task 1: Write failing tests for ConfigStore** - `f925d70` (test)
 2. **Task 2: Implement ConfigStore and wire into ServiceContext and main.go** - `15b276f` (feat)
 
-**Plan metadata:** (docs commit follows)
+**Plan metadata:** `6af11a8` (docs: complete ConfigStore plan)
 
 _Note: TDD tasks have two commits — test (RED) then implementation (GREEN)_
 
