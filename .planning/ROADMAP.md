@@ -17,6 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3: File and Shell Tools** - Local file and shell tools with approval gates and inline tool display
 - [ ] **Phase 4: Web Tools and Audit** - Web search, page fetching, and complete audit logging
 - [x] **Phase 5: Configuration and Search** - Multi-provider model config UI, settings page, and full-text conversation search (completed 2026-03-11)
+- [x] **Phase 6: add go-linting** - golangci-lint v2 config, errcheck/revive/unused fixes, zero-issue clean exit (completed 2026-03-12)
 
 ## Phase Details
 
@@ -117,6 +118,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. File and Shell Tools | 4/5 | In Progress|  |
 | 4. Web Tools and Audit | 3/4 | In Progress|  |
 | 5. Configuration and Search | 5/5 | Complete   | 2026-03-11 |
+| 6. add go-linting | 4/4 | Complete | 2026-03-12 |
 
 ### Phase 6: add go-linting
 
@@ -126,10 +128,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 **Plans:** 4/4 plans complete
 
 Plans:
-- [ ] 06-01-PLAN.md — Install golangci-lint v2.11.3 + write .golangci.yml + update CLAUDE.md (lint-install, lint-config)
-- [ ] 06-02-PLAN.md — Fix 21 errcheck violations in chatlogic.go, sqlitestore.go, webtool.go, test files (errcheck-fixes)
-- [ ] 06-03-PLAN.md — Fix 20 revive + 2 unused + 1 ineffassign violations; rename SessionId to SessionID (revive-fixes, unused-fixes, ineffassign-fixes)
-- [ ] 06-04-PLAN.md — Final verification: golangci-lint exits 0 + go test -cover + human sign-off (lint-clean-exit)
+- [x] 06-01-PLAN.md — Install golangci-lint v2.11.3 + write .golangci.yml + update CLAUDE.md (lint-install, lint-config)
+- [x] 06-02-PLAN.md — Fix 21 errcheck violations in chatlogic.go, sqlitestore.go, webtool.go, test files (errcheck-fixes)
+- [x] 06-03-PLAN.md — Fix 20 revive + 2 unused + 1 ineffassign violations; rename SessionId to SessionID (revive-fixes, unused-fixes, ineffassign-fixes)
+- [x] 06-04-PLAN.md — Final verification: golangci-lint exits 0 + go test -cover + human sign-off (lint-clean-exit)
 
 ### Phase 7: group BE to related domain instead of flat
 
