@@ -142,3 +142,59 @@ func TestStreamChatSystemPrompt(t *testing.T) {
 	assert.Equal(t, openai.ChatMessageRoleSystem, capturedMessages[0].Role)
 	assert.Equal(t, openai.ChatMessageRoleUser, capturedMessages[1].Role)
 }
+
+func TestStreamChatNewSession(t *testing.T) {
+	svcCtx := newTestSvcCtx([]string{"hello"}, nil, -1, 60)
+	l := logic.NewChatLogic(context.Background(), svcCtx)
+
+	w := httptest.NewRecorder()
+	req := &types.ChatRequest{SessionId: "", Message: "tell me something"}
+	err := l.StreamChat(req, w)
+	require.NoError(t, err)
+
+	// SessionId should be assigned a UUID
+	assert.NotEmpty(t, req.SessionId, "expected SessionId to be assigned")
+
+	// Store should have exactly one conversation
+	convs, err := svcCtx.Store.ListConversations()
+	require.NoError(t, err)
+	assert.Len(t, convs, 1)
+
+	// SSE body should contain done event
+	body := w.Body.String()
+	assert.Contains(t, body, `"done":true`)
+}
+
+func TestStreamChatExistingSession(t *testing.T) {
+	svcCtx := newTestSvcCtx([]string{"response"}, nil, -1, 60)
+
+	// Pre-seed the store with an existing conversation
+	existingID := "existing-id"
+	_ = svcCtx.Store.CreateConversation(existingID, "Original Title")
+	svcCtx.Store.Set(existingID, []openai.ChatCompletionMessage{
+		{Role: openai.ChatMessageRoleUser, Content: "previous message"},
+	})
+
+	l := logic.NewChatLogic(context.Background(), svcCtx)
+	w := httptest.NewRecorder()
+	req := &types.ChatRequest{SessionId: existingID, Message: "follow up"}
+	err := l.StreamChat(req, w)
+	require.NoError(t, err)
+
+	// Session ID should remain unchanged
+	assert.Equal(t, existingID, req.SessionId)
+
+	// Conversation should still exist with original title
+	conv, err := svcCtx.Store.GetConversation(existingID)
+	require.NoError(t, err)
+	require.NotNil(t, conv)
+	assert.Equal(t, "Original Title", conv.Title)
+
+	// Messages should be appended (previous + new user + assistant)
+	msgs := svcCtx.Store.Get(existingID)
+	assert.True(t, len(msgs) >= 2, "expected messages to be present")
+
+	// SSE body should contain done event
+	body := w.Body.String()
+	assert.Contains(t, body, `"done":true`)
+}
