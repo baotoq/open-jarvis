@@ -141,3 +141,11 @@ type realClient struct {
 func (r *realClient) CreateChatCompletionStream(ctx context.Context, req openai.ChatCompletionRequest) (StreamRecver, error) {
 	return r.client.CreateChatCompletionStream(ctx, req)
 }
+
+// RebuildAIClient replaces the AIClient with a new real OpenAI-compatible client
+// using the given apiKey and baseURL. Called after a config update.
+func (s *ServiceContext) RebuildAIClient(apiKey, baseURL string) {
+	cfg := openai.DefaultConfig(apiKey)
+	cfg.BaseURL = baseURL
+	s.AIClient = &realClient{client: openai.NewClientWithConfig(cfg)}
+}
