@@ -22,7 +22,7 @@
 ### Safety
 
 - [x] **SAFE-01**: User can configure a command allowlist/denylist for shell tool
-- [ ] **SAFE-02**: Agent prompts user for approval before executing destructive actions
+- [x] **SAFE-02**: Agent prompts user for approval before executing destructive actions
 - [x] **SAFE-03**: Agent loop is bounded by configurable max tool calls and timeout per turn
 - [ ] **SAFE-04**: All tool executions are recorded in an audit log
 
@@ -90,7 +90,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOOL-03 | Phase 4 | Pending |
 | TOOL-04 | Phase 4 | Pending |
 | SAFE-01 | Phase 3 | Complete |
-| SAFE-02 | Phase 3 | Pending |
+| SAFE-02 | Phase 3 | Complete |
 | SAFE-03 | Phase 1 | Complete |
 | SAFE-04 | Phase 4 | Pending |
 | UI-01 | Phase 3 | Pending |
