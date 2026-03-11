@@ -7,8 +7,8 @@
 
 ### Chat
 
-- [ ] **CHAT-01**: User can send a message and receive a streaming token-by-token response
-- [ ] **CHAT-02**: Agent maintains multi-turn conversation context within a session
+- [x] **CHAT-01**: User can send a message and receive a streaming token-by-token response
+- [x] **CHAT-02**: Agent maintains multi-turn conversation context within a session
 - [ ] **CHAT-03**: Conversations are persisted to SQLite and survive restarts
 - [ ] **CHAT-04**: User can configure and switch between OpenAI-compatible model providers (OpenAI, Ollama, Anthropic)
 
@@ -23,7 +23,7 @@
 
 - [ ] **SAFE-01**: User can configure a command allowlist/denylist for shell tool
 - [ ] **SAFE-02**: Agent prompts user for approval before executing destructive actions
-- [ ] **SAFE-03**: Agent loop is bounded by configurable max tool calls and timeout per turn
+- [x] **SAFE-03**: Agent loop is bounded by configurable max tool calls and timeout per turn
 - [ ] **SAFE-04**: All tool executions are recorded in an audit log
 
 ### Web Dashboard
@@ -81,8 +81,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CHAT-01 | Phase 1 | Pending |
-| CHAT-02 | Phase 1 | Pending |
+| CHAT-01 | Phase 1 | Complete |
+| CHAT-02 | Phase 1 | Complete |
 | CHAT-03 | Phase 2 | Pending |
 | CHAT-04 | Phase 5 | Pending |
 | TOOL-01 | Phase 3 | Pending |
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOOL-04 | Phase 4 | Pending |
 | SAFE-01 | Phase 3 | Pending |
 | SAFE-02 | Phase 3 | Pending |
-| SAFE-03 | Phase 1 | Pending |
+| SAFE-03 | Phase 1 | Complete |
 | SAFE-04 | Phase 4 | Pending |
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 2 | Pending |
