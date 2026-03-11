@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/zeromicro/go-zero/core/conf"
 	"open-jarvis/internal/config"
 )
@@ -27,16 +28,8 @@ Port: 8888
 	var cfg config.Config
 	conf.MustLoad(f.Name(), &cfg)
 
-	if cfg.Model.BaseURL != "http://localhost:11434/v1" {
-		t.Errorf("expected BaseURL=http://localhost:11434/v1, got %q", cfg.Model.BaseURL)
-	}
-	if cfg.Model.Name != "llama3.2" {
-		t.Errorf("expected Name=llama3.2, got %q", cfg.Model.Name)
-	}
-	if cfg.MaxToolCalls != 10 {
-		t.Errorf("expected MaxToolCalls=10, got %d", cfg.MaxToolCalls)
-	}
-	if cfg.TurnTimeoutSeconds != 60 {
-		t.Errorf("expected TurnTimeoutSeconds=60, got %d", cfg.TurnTimeoutSeconds)
-	}
+	assert.Equal(t, "http://localhost:11434/v1", cfg.Model.BaseURL)
+	assert.Equal(t, "llama3.2", cfg.Model.Name)
+	assert.Equal(t, 10, cfg.MaxToolCalls)
+	assert.Equal(t, 60, cfg.TurnTimeoutSeconds)
 }

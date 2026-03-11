@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	openai "github.com/sashabaranov/go-openai"
+	"github.com/stretchr/testify/assert"
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/handler"
 	"open-jarvis/internal/svc"
@@ -61,10 +62,6 @@ func TestChatStreamHandlerHeaders(t *testing.T) {
 	h(w, req)
 
 	resp := w.Result()
-	if ct := resp.Header.Get("Content-Type"); ct != "text/event-stream" {
-		t.Errorf("expected Content-Type: text/event-stream, got %q", ct)
-	}
-	if cc := resp.Header.Get("Cache-Control"); cc != "no-cache" {
-		t.Errorf("expected Cache-Control: no-cache, got %q", cc)
-	}
+	assert.Equal(t, "text/event-stream", resp.Header.Get("Content-Type"))
+	assert.Equal(t, "no-cache", resp.Header.Get("Cache-Control"))
 }

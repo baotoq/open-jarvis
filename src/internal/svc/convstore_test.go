@@ -5,15 +5,14 @@ import (
 	"testing"
 
 	openai "github.com/sashabaranov/go-openai"
+	"github.com/stretchr/testify/assert"
 	"open-jarvis/internal/svc"
 )
 
 func TestConvStoreGetEmpty(t *testing.T) {
 	store := svc.NewConvStore()
 	result := store.Get("nonexistent-session")
-	if result != nil {
-		t.Errorf("expected nil for empty session, got %v", result)
-	}
+	assert.Nil(t, result)
 }
 
 func TestConvStoreSetGet(t *testing.T) {
@@ -25,15 +24,9 @@ func TestConvStoreSetGet(t *testing.T) {
 	store.Set("session-1", msgs)
 
 	result := store.Get("session-1")
-	if len(result) != 2 {
-		t.Fatalf("expected 2 messages, got %d", len(result))
-	}
-	if result[0].Content != "hello" {
-		t.Errorf("expected first message 'hello', got %q", result[0].Content)
-	}
-	if result[1].Content != "world" {
-		t.Errorf("expected second message 'world', got %q", result[1].Content)
-	}
+	assert.Len(t, result, 2)
+	assert.Equal(t, "hello", result[0].Content)
+	assert.Equal(t, "world", result[1].Content)
 }
 
 func TestConvStoreConcurrent(t *testing.T) {
@@ -69,7 +62,5 @@ func TestConvStoreCopyIsolation(t *testing.T) {
 
 	// The stored slice should still have 1 message
 	stored := store.Get("session-copy")
-	if len(stored) != 1 {
-		t.Errorf("expected stored slice to have 1 message after mutating returned copy, got %d", len(stored))
-	}
+	assert.Len(t, stored, 1, "stored slice should not be affected by mutating returned copy")
 }

@@ -4,10 +4,11 @@ import (
 	"context"
 	"io"
 	"net/http/httptest"
-	"strings"
 	"testing"
 
 	openai "github.com/sashabaranov/go-openai"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/logic"
 	"open-jarvis/internal/svc"
@@ -80,20 +81,12 @@ func TestStreamChatWritesTokens(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	err := l.StreamChat(&types.ChatRequest{SessionId: "s1", Message: "hi"}, w)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
+	require.NoError(t, err)
 
 	body := w.Body.String()
-	if !strings.Contains(body, "data: token1\n\n") {
-		t.Errorf("expected 'data: token1' in body, got: %q", body)
-	}
-	if !strings.Contains(body, "data: token2\n\n") {
-		t.Errorf("expected 'data: token2' in body, got: %q", body)
-	}
-	if !strings.Contains(body, "data: token3\n\n") {
-		t.Errorf("expected 'data: token3' in body, got: %q", body)
-	}
+	assert.Contains(t, body, "data: token1\n\n")
+	assert.Contains(t, body, "data: token2\n\n")
+	assert.Contains(t, body, "data: token3\n\n")
 }
 
 func TestStreamChatUpdatesHistory(t *testing.T) {
@@ -102,21 +95,15 @@ func TestStreamChatUpdatesHistory(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	err := l.StreamChat(&types.ChatRequest{SessionId: "s2", Message: "say hello"}, w)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
+	require.NoError(t, err)
 
 	history := svcCtx.ConvStore.Get("s2")
 	// system + user + assistant
-	if len(history) != 3 {
-		t.Fatalf("expected 3 messages in history, got %d", len(history))
-	}
-	if history[1].Role != openai.ChatMessageRoleUser || history[1].Content != "say hello" {
-		t.Errorf("expected user message 'say hello', got role=%q content=%q", history[1].Role, history[1].Content)
-	}
-	if history[2].Role != openai.ChatMessageRoleAssistant || history[2].Content != "hello world" {
-		t.Errorf("expected assistant message 'hello world', got role=%q content=%q", history[2].Role, history[2].Content)
-	}
+	require.Len(t, history, 3)
+	assert.Equal(t, openai.ChatMessageRoleUser, history[1].Role)
+	assert.Equal(t, "say hello", history[1].Content)
+	assert.Equal(t, openai.ChatMessageRoleAssistant, history[2].Role)
+	assert.Equal(t, "hello world", history[2].Content)
 }
 
 func TestStreamChatTimeout(t *testing.T) {
@@ -126,14 +113,8 @@ func TestStreamChatTimeout(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	err := l.StreamChat(&types.ChatRequest{SessionId: "s3", Message: "timeout"}, w)
-	if err == nil {
-		t.Fatal("expected error for timeout, got nil")
-	}
-
-	body := w.Body.String()
-	if !strings.Contains(body, "data: [ERROR]") {
-		t.Errorf("expected 'data: [ERROR]' in body, got: %q", body)
-	}
+	assert.Error(t, err)
+	assert.Contains(t, w.Body.String(), "data: [ERROR]")
 }
 
 func TestStreamChatSystemPrompt(t *testing.T) {
@@ -157,13 +138,7 @@ func TestStreamChatSystemPrompt(t *testing.T) {
 	w := httptest.NewRecorder()
 	_ = l.StreamChat(&types.ChatRequest{SessionId: "s4", Message: "hello"}, w)
 
-	if len(capturedMessages) < 2 {
-		t.Fatalf("expected at least 2 messages (system + user), got %d", len(capturedMessages))
-	}
-	if capturedMessages[0].Role != openai.ChatMessageRoleSystem {
-		t.Errorf("expected first message to be system, got %q", capturedMessages[0].Role)
-	}
-	if capturedMessages[1].Role != openai.ChatMessageRoleUser {
-		t.Errorf("expected second message to be user, got %q", capturedMessages[1].Role)
-	}
+	require.GreaterOrEqual(t, len(capturedMessages), 2, "expected at least 2 messages (system + user)")
+	assert.Equal(t, openai.ChatMessageRoleSystem, capturedMessages[0].Role)
+	assert.Equal(t, openai.ChatMessageRoleUser, capturedMessages[1].Role)
 }
