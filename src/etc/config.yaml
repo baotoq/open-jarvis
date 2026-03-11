@@ -1,0 +1,10 @@
+Name: open-jarvis
+Host: 0.0.0.0
+Port: 8888
+Model:
+  BaseURL: http://localhost:11434/v1
+  Name: llama3.2
+  APIKey: ""
+  SystemPrompt: "You are Jarvis, a personal AI assistant. Be concise and helpful."
+MaxToolCalls: 10
+TurnTimeoutSeconds: 60
