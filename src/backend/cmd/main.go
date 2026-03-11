@@ -36,6 +36,9 @@ func main() {
 		{Method: http.MethodGet, Path: "/api/conversations/:id", Handler: handler.GetConversationHandler(svcCtx)},
 		{Method: http.MethodGet, Path: "/api/conversations/:id/messages", Handler: handler.GetConversationMessagesHandler(svcCtx)},
 		{Method: http.MethodDelete, Path: "/api/conversations/:id", Handler: handler.DeleteConversationHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/config", Handler: handler.GetConfigHandler(svcCtx)},
+		{Method: http.MethodPut, Path: "/api/config", Handler: handler.UpdateConfigHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/search", Handler: handler.SearchConversationsHandler(svcCtx)},
 	})
 
 	server.Start()
