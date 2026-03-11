@@ -23,7 +23,7 @@ cd src/backend
 go build ./...                     # build
 go run ./cmd/main.go               # run server (reads etc/config.yaml)
 go test ./...                      # test all
-go test -v -run TestName ./pkg/    # run specific test
+go test -v -run TestName ./internal/...  # run specific test
 go test -cover ./...               # with coverage
 go vet ./...                       # static analysis
 go mod tidy                        # clean dependencies
@@ -60,7 +60,7 @@ src/
 │   │   ├── svc/                # ServiceContext, ConversationStore interface, SQLiteConvStore
 │   │   └── types/              # Shared request/response types
 │   └── go.mod
-└── frontend/                   # Next.js 15 frontend (npm)
+└── frontend/                   # Next.js 16 frontend (npm)
     ├── app/                    # App Router pages and layouts
     ├── components/             # Sidebar, ChatArea, shadcn/ui
     ├── hooks/                  # useSession (localStorage session management)
@@ -69,9 +69,10 @@ src/
 
 ## Gotchas
 
-- SSE streaming: handlers write `data: <token>\n\n` directly to `http.ResponseWriter`; no framework abstraction
+- SSE streaming: handlers write `data: <token>\n\n` directly to `http.ResponseWriter`; routes require `rest.WithSSE()` or go-zero's timeout middleware kills the stream
 - go-zero layer rule: handlers must not contain logic; logic must not import handler types
 - Config defaults are set via struct tags (`default:"value"`), not code
+- SQLite: `src/backend/data/` directory must exist before first run (`mkdir -p src/backend/data`)
 
 ## Codebase Docs
 
