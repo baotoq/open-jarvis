@@ -148,7 +148,7 @@ Plans:
 **Goal:** Add Tilt for local development workflow — single `tilt up` starts Go backend (via air) and Next.js frontend as bare local processes with live reload
 **Requirements**: Developer tooling — no v1 requirements mapped
 **Depends on:** Phase 7
-**Plans:** 0 plans
+**Plans:** 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 8 to break down)
+- [ ] 08-01-PLAN.md — Tiltfile + .air.toml + .gitignore update + README prerequisites + human smoke test (DEV-01 through DEV-06)
