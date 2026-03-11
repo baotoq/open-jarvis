@@ -30,5 +30,12 @@ func main() {
 		Handler: handler.ChatStreamHandler(svcCtx),
 	}, rest.WithSSE())
 
+	server.AddRoutes([]rest.Route{
+		{Method: http.MethodGet, Path: "/api/conversations", Handler: handler.ListConversationsHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/:id", Handler: handler.GetConversationHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/:id/messages", Handler: handler.GetConversationMessagesHandler(svcCtx)},
+		{Method: http.MethodDelete, Path: "/api/conversations/:id", Handler: handler.DeleteConversationHandler(svcCtx)},
+	})
+
 	server.Start()
 }

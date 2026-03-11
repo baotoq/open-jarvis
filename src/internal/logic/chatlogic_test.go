@@ -63,6 +63,55 @@ func (m *mockAIClient) CreateChatCompletionStream(
 	return m.stream, nil
 }
 
+// mockConvStore is a fully functional in-memory ConversationStore for tests
+// that need ListConversations / GetConversation / CreateConversation to work.
+type mockConvStore struct {
+	msgs  map[string][]openai.ChatCompletionMessage
+	convs map[string]svc.Conversation
+}
+
+func newMockConvStore() *mockConvStore {
+	return &mockConvStore{
+		msgs:  make(map[string][]openai.ChatCompletionMessage),
+		convs: make(map[string]svc.Conversation),
+	}
+}
+
+func (m *mockConvStore) Get(id string) []openai.ChatCompletionMessage {
+	return m.msgs[id]
+}
+
+func (m *mockConvStore) Set(id string, msgs []openai.ChatCompletionMessage) {
+	m.msgs[id] = msgs
+}
+
+func (m *mockConvStore) ListConversations() ([]svc.Conversation, error) {
+	result := make([]svc.Conversation, 0, len(m.convs))
+	for _, c := range m.convs {
+		result = append(result, c)
+	}
+	return result, nil
+}
+
+func (m *mockConvStore) GetConversation(id string) (*svc.Conversation, error) {
+	c, ok := m.convs[id]
+	if !ok {
+		return nil, nil
+	}
+	return &c, nil
+}
+
+func (m *mockConvStore) DeleteConversation(id string) error {
+	delete(m.convs, id)
+	delete(m.msgs, id)
+	return nil
+}
+
+func (m *mockConvStore) CreateConversation(id, title string) error {
+	m.convs[id] = svc.Conversation{ID: id, Title: title}
+	return nil
+}
+
 func newTestSvcCtx(tokens []string, streamErr error, errAfter int, timeoutSecs int) *svc.ServiceContext {
 	ms := &mockStream{tokens: tokens, errAfter: errAfter, err: streamErr}
 	client := &mockAIClient{stream: ms}
@@ -72,7 +121,7 @@ func newTestSvcCtx(tokens []string, streamErr error, errAfter int, timeoutSecs i
 			Name:         "test-model",
 		},
 		TurnTimeoutSeconds: timeoutSecs,
-	}, client, svc.NewConvStore())
+	}, client, newMockConvStore())
 }
 
 func TestStreamChatWritesTokens(t *testing.T) {
@@ -94,10 +143,14 @@ func TestStreamChatUpdatesHistory(t *testing.T) {
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 
 	w := httptest.NewRecorder()
-	err := l.StreamChat(&types.ChatRequest{SessionId: "s2", Message: "say hello"}, w)
+	// Use a pointer so we can read the assigned session ID after StreamChat.
+	// When no prior messages exist for an ID, a new UUID is assigned.
+	req := &types.ChatRequest{SessionId: "", Message: "say hello"}
+	err := l.StreamChat(req, w)
 	require.NoError(t, err)
+	require.NotEmpty(t, req.SessionId)
 
-	history := svcCtx.Store.Get("s2")
+	history := svcCtx.Store.Get(req.SessionId)
 	// system + user + assistant
 	require.Len(t, history, 3)
 	assert.Equal(t, openai.ChatMessageRoleUser, history[1].Role)
@@ -132,7 +185,7 @@ func TestStreamChatSystemPrompt(t *testing.T) {
 			Name:         "test-model",
 		},
 		TurnTimeoutSeconds: 60,
-	}, client, svc.NewConvStore())
+	}, client, newMockConvStore())
 
 	l := logic.NewChatLogic(context.Background(), svcCtx)
 	w := httptest.NewRecorder()

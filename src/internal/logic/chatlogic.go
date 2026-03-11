@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	openai "github.com/sashabaranov/go-openai"
 	"open-jarvis/internal/svc"
 	"open-jarvis/internal/types"
@@ -34,15 +35,28 @@ func NewChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ChatLogic {
 
 // StreamChat performs the streaming LLM call, writing SSE tokens to w.
 // It prepends the system prompt for new sessions, appends conversation history,
-// and stores the assembled response in ConvStore after completion.
+// and stores the assembled response in the Store after completion.
+// When req.SessionId is empty, a UUID is assigned and a new conversation is created.
+// A final SSE done event carrying the session ID is emitted after streaming completes.
 func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) error {
 	ctx, cancel := context.WithTimeout(l.ctx,
 		time.Duration(l.svcCtx.Config.TurnTimeoutSeconds)*time.Second)
 	defer cancel()
 
+	// Determine if this is a new session or an existing one.
+	// An existing session is one where the store already holds messages for the ID.
+	// When SessionId is empty or the store has no messages for it, treat as new.
+	isNewSession := false
+	if req.SessionId == "" {
+		req.SessionId = uuid.New().String()
+		isNewSession = true
+	}
+
 	// Build message history with system prompt for new sessions
 	history := l.svcCtx.Store.Get(req.SessionId)
 	if len(history) == 0 {
+		// No existing messages — this is a new session
+		isNewSession = true
 		history = append(history, openai.ChatCompletionMessage{
 			Role:    openai.ChatMessageRoleSystem,
 			Content: l.svcCtx.Config.Model.SystemPrompt,
@@ -101,5 +115,20 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 		Content: fullResponse.String(),
 	})
 	l.svcCtx.Store.Set(req.SessionId, history)
+
+	// Create the conversation record for new sessions
+	if isNewSession {
+		runes := []rune(req.Message)
+		if len(runes) > 50 {
+			runes = runes[:50]
+		}
+		title := string(runes)
+		_ = l.svcCtx.Store.CreateConversation(req.SessionId, title)
+	}
+
+	// Emit the done event with the session ID
+	fmt.Fprintf(w, "data: {\"done\":true,\"sessionId\":\"%s\"}\n\n", req.SessionId)
+	flusher.Flush()
+
 	return nil
 }
