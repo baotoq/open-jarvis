@@ -63,11 +63,14 @@ Plans:
   3. User can ask the agent to run a shell command and see the output inline in the chat
   4. Agent prompts user for confirmation before executing shell commands flagged by the allowlist/denylist
   5. Tool calls and their results appear as distinct, inspectable blocks in the chat UI alongside messages
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Tool executor package: Executor interface, FileTool, ShellTool, unit tests (TOOL-01, TOOL-02, SAFE-01)
+- [ ] 03-02-PLAN.md — Config + ServiceContext: ShellAllowlist/Denylist/WorkspaceRoot, ApprovalStore, wiring (SAFE-01, SAFE-02)
+- [ ] 03-03-PLAN.md — Agentic loop: ChatLogic tool dispatch, approval gate, SSE events, approve handler (TOOL-01, TOOL-02, SAFE-02)
+- [ ] 03-04-PLAN.md — Frontend: MessagePart types, ToolCallBlock, ApprovalDialog, extended ChatArea SSE parser (UI-01)
+- [ ] 03-05-PLAN.md — Verification: human browser test — file read/write, shell approval, tool blocks in UI (TOOL-01, TOOL-02, SAFE-01, SAFE-02, UI-01)
 
 ### Phase 4: Web Tools and Audit
 **Goal**: Agent can search the web and fetch pages, and all tool executions are recorded for inspection
@@ -104,6 +107,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Streaming Chat Loop | 1/3 | In Progress|  |
 | 2. Conversation Persistence | 2/5 | In Progress|  |
-| 3. File and Shell Tools | 0/2 | Not started | - |
+| 3. File and Shell Tools | 0/5 | Not started | - |
 | 4. Web Tools and Audit | 0/1 | Not started | - |
 | 5. Configuration and Search | 0/1 | Not started | - |
