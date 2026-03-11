@@ -11,7 +11,7 @@ import (
 	_ "modernc.org/sqlite"
 
 	"open-jarvis/internal/config"
-	"open-jarvis/internal/conv/logic"
+	logic "open-jarvis/internal/conv/logic"
 	"open-jarvis/internal/svc"
 )
 

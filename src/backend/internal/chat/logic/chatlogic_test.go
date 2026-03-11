@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"open-jarvis/internal/chat/logic"
+	logic "open-jarvis/internal/chat/logic"
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/svc"
 	"open-jarvis/internal/types"

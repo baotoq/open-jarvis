@@ -5,8 +5,10 @@ import (
 	"flag"
 	"net/http"
 
+	"open-jarvis/internal/chat/handler"
 	"open-jarvis/internal/config"
-	"open-jarvis/internal/handler"
+	"open-jarvis/internal/config/handler"
+	"open-jarvis/internal/conv/handler"
 	"open-jarvis/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -29,18 +31,18 @@ func main() {
 	server.AddRoute(rest.Route{
 		Method:  http.MethodPost,
 		Path:    "/api/chat/stream",
-		Handler: handler.ChatStreamHandler(svcCtx),
+		Handler: chat.ChatStreamHandler(svcCtx),
 	}, rest.WithSSE())
 
 	server.AddRoutes([]rest.Route{
-		{Method: http.MethodPost, Path: "/api/chat/approve", Handler: handler.ApproveHandler(svcCtx)},
-		{Method: http.MethodGet, Path: "/api/conversations", Handler: handler.ListConversationsHandler(svcCtx)},
-		{Method: http.MethodGet, Path: "/api/conversations/:id", Handler: handler.GetConversationHandler(svcCtx)},
-		{Method: http.MethodGet, Path: "/api/conversations/:id/messages", Handler: handler.GetConversationMessagesHandler(svcCtx)},
-		{Method: http.MethodDelete, Path: "/api/conversations/:id", Handler: handler.DeleteConversationHandler(svcCtx)},
-		{Method: http.MethodGet, Path: "/api/config", Handler: handler.GetConfigHandler(svcCtx)},
-		{Method: http.MethodPut, Path: "/api/config", Handler: handler.UpdateConfigHandler(svcCtx)},
-		{Method: http.MethodGet, Path: "/api/conversations/search", Handler: handler.SearchConversationsHandler(svcCtx)},
+		{Method: http.MethodPost, Path: "/api/chat/approve", Handler: chat.ApproveHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations", Handler: conv.ListConversationsHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/:id", Handler: conv.GetConversationHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/:id/messages", Handler: conv.GetConversationMessagesHandler(svcCtx)},
+		{Method: http.MethodDelete, Path: "/api/conversations/:id", Handler: conv.DeleteConversationHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/config", Handler: cfg.GetConfigHandler(svcCtx)},
+		{Method: http.MethodPut, Path: "/api/config", Handler: cfg.UpdateConfigHandler(svcCtx)},
+		{Method: http.MethodGet, Path: "/api/conversations/search", Handler: conv.SearchConversationsHandler(svcCtx)},
 	})
 
 	server.Start()
