@@ -44,10 +44,14 @@ Plans:
   1. User can close the browser, reopen it, and see their previous conversation intact
   2. User can see a sidebar listing all past conversations and click one to load it
   3. Starting a new conversation creates a fresh session without losing previous ones
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — Backend data layer: ConversationStore interface, SQLiteConvStore, config DBPath, servicecontext wiring (CHAT-03)
+- [ ] 02-02-PLAN.md — Frontend scaffold: Next.js 15 app, Tailwind v4, shadcn/ui, cn() utility, API_BASE (UI-02)
+- [ ] 02-03-PLAN.md — Backend API endpoints: list/get/delete conversations, SSE done event with session ID, UUID assignment in chatlogic (CHAT-03, UI-02)
+- [ ] 02-04-PLAN.md — Frontend UI: useSession hook, Sidebar, ChatArea, page layout (UI-02, CHAT-03)
+- [ ] 02-05-PLAN.md — Verification: human browser test — stream, persist, sidebar, reload, delete (CHAT-03, UI-02)
 
 ### Phase 3: File and Shell Tools
 **Goal**: Agent can read/write files and run shell commands with user approval, and tool actions are visible in the chat
@@ -99,7 +103,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Streaming Chat Loop | 1/3 | In Progress|  |
-| 2. Conversation Persistence | 0/1 | Not started | - |
+| 2. Conversation Persistence | 0/5 | Not started | - |
 | 3. File and Shell Tools | 0/2 | Not started | - |
 | 4. Web Tools and Audit | 0/1 | Not started | - |
 | 5. Configuration and Search | 0/1 | Not started | - |
