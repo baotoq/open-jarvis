@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-03-11T15:15:23.387Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-11T15:19:06.858Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 17
-  completed_plans: 10
+  completed_plans: 11
   percent: 0
 ---
 
@@ -60,6 +60,7 @@ Progress: [..........] 0%
 | Phase 03-file-and-shell-tools P04 | 185s | 2 tasks | 7 files |
 | Phase 03-file-and-shell-tools P03 | 345s | 2 tasks | 7 files |
 | Phase 04-web-tools-and-audit P01 | 135s | 2 tasks | 5 files |
+| Phase 04-web-tools-and-audit P02 | 66 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,7 @@ Recent decisions affecting current work:
 - [Phase 03-file-and-shell-tools]: Tool denial errors surfaced in tool result content field, not Go error, to keep agentic loop running
 - [Phase 04-web-tools-and-audit]: go-shiori/go-readability used despite deprecation notice; functional and on pkg.go.dev — migrate to codeberg.org/readeck/go-readability/v2 in a future phase if needed
 - [Phase 04-web-tools-and-audit]: WebSearchTool.baseURL exposed as struct field to allow httptest override in tests without changing the public NewWebSearchTool(apiKey) API
+- [Phase 04-web-tools-and-audit]: AuditStore uses same *sql.DB as SQLiteConvStore to avoid extra SQLite connection; empty strings stored as NOT NULL DEFAULT '' not NULL
 
 ### Pending Todos
 
@@ -103,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T15:15:23.385Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-11T15:19:06.854Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None
