@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 05-05-PLAN.md
-last_updated: "2026-03-11T16:04:36.225Z"
+stopped_at: Phase 7 context gathered
+last_updated: "2026-03-11T18:20:40.671Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
-  total_phases: 5
+  total_phases: 7
   completed_phases: 1
-  total_plans: 22
+  total_plans: 23
   completed_plans: 17
   percent: 0
 ---
@@ -111,6 +111,11 @@ Recent decisions affecting current work:
 - [Phase 05-configuration-and-search]: useRef<T | undefined>(undefined) used for debounce timer ref — useRef<T>() without initial value fails strict TypeScript as of React 19 type definitions
 - [Phase 05-configuration-and-search]: auto-advance active: human-verify checkpoint auto-approved for Phase 5 end-to-end browser verification
 
+### Roadmap Evolution
+
+- Phase 6 added: add go-linting
+- Phase 7 added: group BE to related domain instead of flat
+
 ### Pending Todos
 
 None yet.
@@ -121,6 +126,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T16:04:36.222Z
-Stopped at: Completed 05-05-PLAN.md
-Resume file: None
+Last session: 2026-03-11T18:20:40.662Z
+Stopped at: Phase 7 context gathered
+Resume file: .planning/phases/07-group-be-to-related-domain-instead-of-flat/07-CONTEXT.md
