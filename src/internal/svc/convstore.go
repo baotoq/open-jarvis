@@ -6,6 +6,24 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
+// Conversation represents a conversation metadata record.
+type Conversation struct {
+	ID        string
+	Title     string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// ConversationStore is the interface for storing and retrieving conversations.
+type ConversationStore interface {
+	Get(sessionID string) []openai.ChatCompletionMessage
+	Set(sessionID string, msgs []openai.ChatCompletionMessage)
+	ListConversations() ([]Conversation, error)
+	GetConversation(id string) (*Conversation, error)
+	DeleteConversation(id string) error
+	CreateConversation(id, title string) error
+}
+
 // ConvStore is a thread-safe in-memory conversation store keyed by session ID.
 type ConvStore struct {
 	mu   sync.RWMutex
@@ -35,4 +53,24 @@ func (s *ConvStore) Set(sessionID string, msgs []openai.ChatCompletionMessage) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.data[sessionID] = msgs
+}
+
+// ListConversations returns an empty list (stub for in-memory store).
+func (s *ConvStore) ListConversations() ([]Conversation, error) {
+	return []Conversation{}, nil
+}
+
+// GetConversation returns nil (stub for in-memory store).
+func (s *ConvStore) GetConversation(id string) (*Conversation, error) {
+	return nil, nil
+}
+
+// DeleteConversation is a no-op for in-memory store.
+func (s *ConvStore) DeleteConversation(id string) error {
+	return nil
+}
+
+// CreateConversation is a no-op for in-memory store.
+func (s *ConvStore) CreateConversation(id, title string) error {
+	return nil
 }

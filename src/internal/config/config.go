@@ -15,6 +15,7 @@ type ModelConfig struct {
 type Config struct {
 	rest.RestConf
 	Model              ModelConfig
-	MaxToolCalls       int `json:",default=10"`
-	TurnTimeoutSeconds int `json:",default=60"`
+	MaxToolCalls       int    `json:",default=10"`
+	TurnTimeoutSeconds int    `json:",default=60"`
+	DBPath             string `json:",default=data/conversations.db"`
 }

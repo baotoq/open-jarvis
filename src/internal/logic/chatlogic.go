@@ -41,7 +41,7 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 	defer cancel()
 
 	// Build message history with system prompt for new sessions
-	history := l.svcCtx.ConvStore.Get(req.SessionId)
+	history := l.svcCtx.Store.Get(req.SessionId)
 	if len(history) == 0 {
 		history = append(history, openai.ChatCompletionMessage{
 			Role:    openai.ChatMessageRoleSystem,
@@ -100,6 +100,6 @@ func (l *ChatLogic) StreamChat(req *types.ChatRequest, w http.ResponseWriter) er
 		Role:    openai.ChatMessageRoleAssistant,
 		Content: fullResponse.String(),
 	})
-	l.svcCtx.ConvStore.Set(req.SessionId, history)
+	l.svcCtx.Store.Set(req.SessionId, history)
 	return nil
 }

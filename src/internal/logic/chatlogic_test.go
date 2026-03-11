@@ -97,7 +97,7 @@ func TestStreamChatUpdatesHistory(t *testing.T) {
 	err := l.StreamChat(&types.ChatRequest{SessionId: "s2", Message: "say hello"}, w)
 	require.NoError(t, err)
 
-	history := svcCtx.ConvStore.Get("s2")
+	history := svcCtx.Store.Get("s2")
 	// system + user + assistant
 	require.Len(t, history, 3)
 	assert.Equal(t, openai.ChatMessageRoleUser, history[1].Role)
