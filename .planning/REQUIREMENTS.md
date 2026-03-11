@@ -14,14 +14,14 @@
 
 ### Agent Tools
 
-- [ ] **TOOL-01**: Agent can read and write local files on user's machine
-- [ ] **TOOL-02**: Agent can execute shell commands (subject to safety controls)
+- [x] **TOOL-01**: Agent can read and write local files on user's machine
+- [x] **TOOL-02**: Agent can execute shell commands (subject to safety controls)
 - [ ] **TOOL-03**: Agent can fetch and summarize web pages
 - [ ] **TOOL-04**: Agent can search the web and return results
 
 ### Safety
 
-- [ ] **SAFE-01**: User can configure a command allowlist/denylist for shell tool
+- [x] **SAFE-01**: User can configure a command allowlist/denylist for shell tool
 - [ ] **SAFE-02**: Agent prompts user for approval before executing destructive actions
 - [x] **SAFE-03**: Agent loop is bounded by configurable max tool calls and timeout per turn
 - [ ] **SAFE-04**: All tool executions are recorded in an audit log
@@ -85,11 +85,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-02 | Phase 1 | Complete |
 | CHAT-03 | Phase 2 | Complete |
 | CHAT-04 | Phase 5 | Pending |
-| TOOL-01 | Phase 3 | Pending |
-| TOOL-02 | Phase 3 | Pending |
+| TOOL-01 | Phase 3 | Complete |
+| TOOL-02 | Phase 3 | Complete |
 | TOOL-03 | Phase 4 | Pending |
 | TOOL-04 | Phase 4 | Pending |
-| SAFE-01 | Phase 3 | Pending |
+| SAFE-01 | Phase 3 | Complete |
 | SAFE-02 | Phase 3 | Pending |
 | SAFE-03 | Phase 1 | Complete |
 | SAFE-04 | Phase 4 | Pending |

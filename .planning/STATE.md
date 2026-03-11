@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-03-11T13:54:55.499Z"
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-03-11T14:34:17.048Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 8
-  completed_plans: 5
+  total_plans: 13
+  completed_plans: 6
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [..........] 0%
 | Phase 02-conversation-persistence P01 | 3 | 2 tasks | 9 files |
 | Phase 02-conversation-persistence P03 | 298s | 2 tasks | 15 files |
 | Phase 02-conversation-persistence P04 | 2min | 2 tasks | 6 files |
+| Phase 03-file-and-shell-tools P01 | 104 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,9 @@ Recent decisions affecting current work:
 - [Phase 02-conversation-persistence]: pathvar.WithVars used to inject go-zero path params into httptest.Request for handler unit tests without full router
 - [Phase 02-conversation-persistence]: effectiveConvId = activeConvId ?? sessionId avoids extra useEffect for syncing localStorage session on mount
 - [Phase 02-conversation-persistence]: SSE client parses JSON.parse(data) to detect done event; text tokens fall through to catch block
+- [Phase 03-file-and-shell-tools]: ToolRegistry dispatches by name string map; unknown tool returns ToolResult{Error: 'unknown tool: <name>'} rather than panicking
+- [Phase 03-file-and-shell-tools]: safePath adds trailing separator to root before prefix check to prevent /tmp matching /tmpother
+- [Phase 03-file-and-shell-tools]: RequiresApproval uses filepath.Match (not regexp); denylist evaluated before allowlist; default is true (requires approval)
 
 ### Pending Todos
 
@@ -86,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T13:54:55.496Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-03-11T14:34:17.045Z
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None
