@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-03-11T15:25:29.194Z"
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-11T15:51:00.483Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 17
-  completed_plans: 12
+  total_plans: 22
+  completed_plans: 13
   percent: 0
 ---
 
@@ -62,6 +62,7 @@ Progress: [..........] 0%
 | Phase 04-web-tools-and-audit P01 | 135s | 2 tasks | 5 files |
 | Phase 04-web-tools-and-audit P02 | 66 | 1 tasks | 2 files |
 | Phase 04-web-tools-and-audit PP03 | 4min | 2 tasks | 5 files |
+| Phase 05-configuration-and-search P02 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,7 @@ Recent decisions affecting current work:
 - [Phase 04-web-tools-and-audit]: AuditStore uses same *sql.DB as SQLiteConvStore to avoid extra SQLite connection; empty strings stored as NOT NULL DEFAULT '' not NULL
 - [Phase 04-web-tools-and-audit]: AuditStore left nil in NewServiceContextWithClient to preserve backward compatibility with existing logic tests
 - [Phase 04-web-tools-and-audit]: NewServiceContextForTest creates in-memory AuditStore via :memory: SQLite so audit calls never panic in integration tests
+- [Phase 05-configuration-and-search]: ConfigStore.Update writes YAML first then updates in-memory on success; empty cfgPath is no-op for test constructors; raw map[string]any YAML round-trip preserves non-Model fields
 
 ### Pending Todos
 
@@ -108,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T15:25:29.191Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-03-11T15:51:00.481Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
