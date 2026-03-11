@@ -1,3 +1,4 @@
+// Package config provides the Config struct and defaults for the open-jarvis backend.
 package config
 
 import "github.com/zeromicro/go-zero/rest"
@@ -5,6 +6,7 @@ import "github.com/zeromicro/go-zero/rest"
 // DefaultSystemPrompt is the default system prompt used when none is configured.
 const DefaultSystemPrompt = "You are Jarvis, a personal AI assistant. Be concise and helpful."
 
+// ModelConfig holds the AI model provider settings loaded from config YAML.
 type ModelConfig struct {
 	BaseURL      string `json:",default=http://localhost:11434/v1"`
 	Name         string `json:",default=llama3.2"`
@@ -12,6 +14,7 @@ type ModelConfig struct {
 	SystemPrompt string `json:",optional"`
 }
 
+// Config is the top-level configuration for the open-jarvis backend service.
 type Config struct {
 	rest.RestConf
 	Model                  ModelConfig

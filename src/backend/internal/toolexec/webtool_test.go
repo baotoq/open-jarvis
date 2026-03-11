@@ -32,7 +32,7 @@ func TestWebFetchTool_InvalidArgsJSON(t *testing.T) {
 }
 
 func TestWebFetchTool_FetchReturnsReadableText(t *testing.T) {
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		const htmlBody = `<!DOCTYPE html>
 <html>
@@ -138,7 +138,7 @@ func TestWebSearchTool_SuccessfulSearch(t *testing.T) {
 }
 
 func TestWebSearchTool_APIError(t *testing.T) {
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 	}))
 	defer srv.Close()
@@ -154,7 +154,7 @@ func TestWebSearchTool_APIError(t *testing.T) {
 }
 
 func TestWebSearchTool_EmptyResults(t *testing.T) {
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		resp := braveSearchResponse{}
 		json.NewEncoder(w).Encode(resp) //nolint:errcheck // test handler; encode errors not relevant
 	}))

@@ -1,3 +1,4 @@
+// Package toolexec provides tool execution primitives for the agentic loop.
 package toolexec
 
 import "context"

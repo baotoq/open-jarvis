@@ -86,12 +86,13 @@ func TestConfigStoreYAML_MissingFile(t *testing.T) {
 }
 
 func TestConfigStoreUpdate_Concurrent(t *testing.T) {
+	t.Parallel()
 	cs := NewConfigStore(config.ModelConfig{Name: "initial"}, "")
 
 	var wg sync.WaitGroup
 	for i := 0; i < 10; i++ {
 		wg.Add(1)
-		go func(i int) {
+		go func(_ int) {
 			defer wg.Done()
 			_ = cs.Update(config.ModelConfig{Name: "model"})
 		}(i)

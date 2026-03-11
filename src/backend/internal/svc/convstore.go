@@ -61,16 +61,16 @@ func (s *ConvStore) ListConversations() ([]Conversation, error) {
 }
 
 // GetConversation returns nil (stub for in-memory store).
-func (s *ConvStore) GetConversation(id string) (*Conversation, error) {
+func (s *ConvStore) GetConversation(_ string) (*Conversation, error) {
 	return nil, nil
 }
 
 // DeleteConversation is a no-op for in-memory store.
-func (s *ConvStore) DeleteConversation(id string) error {
+func (s *ConvStore) DeleteConversation(_ string) error {
 	return nil
 }
 
 // CreateConversation is a no-op for in-memory store.
-func (s *ConvStore) CreateConversation(id, title string) error {
+func (s *ConvStore) CreateConversation(_, _ string) error {
 	return nil
 }

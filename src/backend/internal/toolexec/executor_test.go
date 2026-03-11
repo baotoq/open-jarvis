@@ -24,7 +24,7 @@ func TestToolRegistry_UnknownTool(t *testing.T) {
 
 func TestToolRegistry_RegisterAndDispatch(t *testing.T) {
 	reg := toolexec.NewRegistry()
-	reg.Register("echo", func(ctx context.Context, argsJSON string) toolexec.ToolResult {
+	reg.Register("echo", func(_ context.Context, argsJSON string) toolexec.ToolResult {
 		return toolexec.ToolResult{Content: "echoed: " + argsJSON}
 	})
 	result := reg.Execute(context.Background(), "echo", `{"msg":"hi"}`)

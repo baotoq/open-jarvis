@@ -30,7 +30,7 @@ func NewWebFetchTool(timeoutSeconds int) *WebFetchTool {
 
 // Fetch retrieves the URL in args and returns article title + plain text.
 // JSON args: {"URL":"https://..."}
-func (w *WebFetchTool) Fetch(ctx context.Context, argsJSON string) ToolResult {
+func (w *WebFetchTool) Fetch(_ context.Context, argsJSON string) ToolResult {
 	var args struct{ URL string }
 	if err := json.Unmarshal([]byte(argsJSON), &args); err != nil {
 		return ToolResult{Error: "invalid args: " + err.Error()}

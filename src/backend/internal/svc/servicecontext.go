@@ -1,3 +1,4 @@
+// Package svc provides the ServiceContext and shared dependencies for the open-jarvis backend.
 package svc
 
 import (

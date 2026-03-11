@@ -9,13 +9,6 @@ import (
 	"open-jarvis/internal/svc"
 )
 
-// mockAIStreamer satisfies svc.AIStreamer for tests that need a minimal ServiceContext.
-type mockAIStreamer struct{}
-
-func (m *mockAIStreamer) CreateChatCompletionStream(_ interface{ Done() <-chan struct{} }, _ interface{}) (interface{}, error) {
-	return nil, nil
-}
-
 // TestNewServiceContextForTest verifies that NewServiceContextForTest wires
 // AuditStore and web tools correctly.
 func TestNewServiceContextForTest(t *testing.T) {

@@ -30,6 +30,7 @@ func TestConvStoreSetGet(t *testing.T) {
 }
 
 func TestConvStoreConcurrent(t *testing.T) {
+	t.Parallel()
 	store := svc.NewConvStore()
 	keys := []string{"session-a", "session-b", "session-c"}
 	msgs := []openai.ChatCompletionMessage{
@@ -56,9 +57,10 @@ func TestConvStoreCopyIsolation(t *testing.T) {
 	}
 	store.Set("session-copy", original)
 
-	// Mutate the returned slice
+	// Mutate the returned slice — result discarded intentionally; we only care the
+	// stored slice is unaffected.
 	got := store.Get("session-copy")
-	got = append(got, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleAssistant, Content: "extra"})
+	_ = append(got, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleAssistant, Content: "extra"})
 
 	// The stored slice should still have 1 message
 	stored := store.Get("session-copy")
