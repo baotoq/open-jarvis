@@ -33,10 +33,11 @@ type ServiceContext struct {
 	ApprovalStore *ApprovalStore
 	ShellTool     *toolexec.ShellTool
 	AuditStore    *AuditStore
+	ConfigStore   *ConfigStore
 }
 
 // NewServiceContext creates a new ServiceContext with a real OpenAI-compatible client.
-func NewServiceContext(c config.Config) *ServiceContext {
+func NewServiceContext(c config.Config, configPath string) *ServiceContext {
 	// Apply default system prompt if not set in config
 	if c.Model.SystemPrompt == "" {
 		c.Model.SystemPrompt = config.DefaultSystemPrompt
@@ -88,6 +89,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		ApprovalStore: NewApprovalStore(),
 		ShellTool:     shellTool,
 		AuditStore:    auditStore,
+		ConfigStore:   NewConfigStore(c.Model, configPath),
 	}
 }
 

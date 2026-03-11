@@ -22,7 +22,7 @@ func main() {
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
 
-	svcCtx := svc.NewServiceContext(c)
+	svcCtx := svc.NewServiceContext(c, *configFile)
 
 	server.AddRoute(rest.Route{
 		Method:  http.MethodPost,
