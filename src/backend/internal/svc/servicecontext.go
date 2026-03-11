@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	_ "modernc.org/sqlite"
 	openai "github.com/sashabaranov/go-openai"
+	_ "modernc.org/sqlite"
+
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/toolexec"
 )

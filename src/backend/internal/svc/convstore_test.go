@@ -6,6 +6,7 @@ import (
 
 	openai "github.com/sashabaranov/go-openai"
 	"github.com/stretchr/testify/assert"
+
 	"open-jarvis/internal/svc"
 )
 

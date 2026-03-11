@@ -13,6 +13,7 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/logic"
 	"open-jarvis/internal/svc"
@@ -73,7 +74,7 @@ type mockAIClient struct {
 }
 
 func (m *mockAIClient) CreateChatCompletionStream(
-	ctx context.Context,
+	_ context.Context,
 	req openai.ChatCompletionRequest,
 ) (svc.StreamRecver, error) {
 	if m.capture != nil {
@@ -93,7 +94,7 @@ type multiStreamAIClient struct {
 }
 
 func (m *multiStreamAIClient) CreateChatCompletionStream(
-	ctx context.Context,
+	_ context.Context,
 	req openai.ChatCompletionRequest,
 ) (svc.StreamRecver, error) {
 	m.captures = append(m.captures, req.Messages)
@@ -579,4 +580,3 @@ func extractApprovalID(body string) string {
 	}
 	return ""
 }
-

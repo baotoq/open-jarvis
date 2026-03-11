@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"gopkg.in/yaml.v3"
+
 	"open-jarvis/internal/config"
 
 	"github.com/stretchr/testify/assert"

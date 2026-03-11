@@ -1,3 +1,4 @@
+// Package logic implements the business logic layer for the open-jarvis backend.
 package logic
 
 import (
@@ -13,6 +14,7 @@ import (
 
 	"github.com/google/uuid"
 	openai "github.com/sashabaranov/go-openai"
+
 	"open-jarvis/internal/svc"
 	"open-jarvis/internal/types"
 )

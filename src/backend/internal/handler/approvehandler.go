@@ -1,9 +1,11 @@
+// Package handler contains HTTP handlers for the open-jarvis API.
 package handler
 
 import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"open-jarvis/internal/svc"
 	"open-jarvis/internal/types"
 )

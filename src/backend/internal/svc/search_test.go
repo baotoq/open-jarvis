@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	openai "github.com/sashabaranov/go-openai"
-	_ "modernc.org/sqlite"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	_ "modernc.org/sqlite"
+
 	"open-jarvis/internal/svc"
 )
 

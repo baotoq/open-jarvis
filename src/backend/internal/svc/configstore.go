@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"gopkg.in/yaml.v3"
+
 	"open-jarvis/internal/config"
 )
 

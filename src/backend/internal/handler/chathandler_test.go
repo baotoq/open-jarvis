@@ -10,6 +10,7 @@ import (
 
 	openai "github.com/sashabaranov/go-openai"
 	"github.com/stretchr/testify/assert"
+
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/handler"
 	"open-jarvis/internal/svc"
@@ -38,8 +39,8 @@ func (s *simpleStream) Close() error { return nil }
 type simpleClient struct{}
 
 func (c *simpleClient) CreateChatCompletionStream(
-	ctx context.Context,
-	req openai.ChatCompletionRequest,
+	_ context.Context,
+	_ openai.ChatCompletionRequest,
 ) (svc.StreamRecver, error) {
 	return &simpleStream{tokens: []string{"hello"}}, nil
 }

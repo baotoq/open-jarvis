@@ -1,14 +1,16 @@
+// Package main is the entry point for the open-jarvis backend server.
 package main
 
 import (
 	"flag"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 	"open-jarvis/internal/config"
 	"open-jarvis/internal/handler"
 	"open-jarvis/internal/svc"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/config.yaml", "the config file")

@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/zeromicro/go-zero/core/conf"
+
 	"open-jarvis/internal/config"
 )
 
@@ -19,11 +20,11 @@ Port: 8888
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(f.Name())
+	defer os.Remove(f.Name()) //nolint:errcheck // test cleanup
 	if _, err := f.WriteString(yaml); err != nil {
 		t.Fatal(err)
 	}
-	f.Close()
+	_ = f.Close()
 
 	var cfg config.Config
 	conf.MustLoad(f.Name(), &cfg)
@@ -44,11 +45,11 @@ Port: 8888
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(f.Name())
+	defer os.Remove(f.Name()) //nolint:errcheck // test cleanup
 	if _, err := f.WriteString(yaml); err != nil {
 		t.Fatal(err)
 	}
-	f.Close()
+	_ = f.Close()
 
 	var cfg config.Config
 	conf.MustLoad(f.Name(), &cfg)
