@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Completed 07-01-PLAN.md (domain logic grouping)
-last_updated: "2026-03-11T19:16:08.956Z"
+stopped_at: Completed 07-02-PLAN.md (domain handler grouping)
+last_updated: "2026-03-11T19:23:11.549Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 30
-  completed_plans: 23
+  completed_plans: 24
   percent: 0
 ---
 
@@ -73,6 +73,7 @@ Progress: [..........] 0%
 | Phase 06-add-go-linting PP04 | 2min | 2 tasks | 1 files |
 | Phase 08-add-tilt P01 | 5min | 1 tasks | 4 files |
 | Phase 07-group-be-to-related-domain-instead-of-flat P01 | 357s | 2 tasks | 11 files |
+| Phase 07-group-be-to-related-domain-instead-of-flat P02 | 8min | 2 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -128,6 +129,8 @@ Recent decisions affecting current work:
 - [Phase 08-add-tilt]: readiness_probe tcp_socket_action(port=8888) ensures frontend resource_deps waits for backend to actually listen
 - [Phase 08-add-tilt]: ignore=['src/backend/tmp', 'src/backend/data'] prevents Tilt thrashing on air build output and SQLite writes
 - [Phase 07-group-be-to-related-domain-instead-of-flat]: Config logic package named cfg (not config) to avoid collision with internal/config package
+- [Phase 07-group-be-to-related-domain-instead-of-flat]: chatlogic/convlogic/cfglogic import aliases used in handler files because handler package name matches imported logic package name, requiring explicit alias to disambiguate
+- [Phase 07-group-be-to-related-domain-instead-of-flat]: Handler test files use 'handler' import alias for domain handler package so test code reads handler.ChatStreamHandler not chat.ChatStreamHandler
 
 ### Roadmap Evolution
 
@@ -145,6 +148,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T19:16:08.952Z
-Stopped at: Completed 07-01-PLAN.md (domain logic grouping)
+Last session: 2026-03-11T19:23:11.546Z
+Stopped at: Completed 07-02-PLAN.md (domain handler grouping)
 Resume file: None

@@ -138,7 +138,7 @@ Plans:
 **Goal:** Reorganize `internal/handler/` and `internal/logic/` from flat packages into domain-grouped, domain-first subdirectory structure (chat, conv, config) — pure structural refactor, no behavior changes
 **Requirements**: TBD
 **Depends on:** Phase 6
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 07-01-PLAN.md — Move all logic files into domain subdirectories (chat/logic, conv/logic, config/logic) with updated package declarations
