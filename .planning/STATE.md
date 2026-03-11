@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-03-11T15:52:20.235Z"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-03-11T15:58:04.502Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 22
-  completed_plans: 14
+  completed_plans: 15
   percent: 0
 ---
 
@@ -64,6 +64,7 @@ Progress: [..........] 0%
 | Phase 04-web-tools-and-audit PP03 | 4min | 2 tasks | 5 files |
 | Phase 05-configuration-and-search P02 | 3min | 2 tasks | 4 files |
 | Phase 05-configuration-and-search P01 | 4min | 2 tasks | 2 files |
+| Phase 05-configuration-and-search P03 | 12min | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,9 @@ Recent decisions affecting current work:
 - [Phase 05-configuration-and-search]: ConfigStore.Update writes YAML first then updates in-memory on success; empty cfgPath is no-op for test constructors; raw map[string]any YAML round-trip preserves non-Model fields
 - [Phase 05-configuration-and-search]: FTS5 'rebuild' command used for initial populate instead of WHERE id NOT IN guard: content tables reflect underlying table rowids even before explicit indexing
 - [Phase 05-configuration-and-search]: SanitizeFTSQuery exported (not unexported) to allow black-box test coverage from package svc_test
+- [Phase 05-configuration-and-search]: RebuildAIClient added to ServiceContext to encapsulate unexported realClient struct; UpdateConfigLogic calls svcCtx.RebuildAIClient rather than constructing the client directly
+- [Phase 05-configuration-and-search]: ConvSearcher interface defined in logic package (consumer) not svc (provider), following interfaces-belong-to-consumers rule
+- [Phase 05-configuration-and-search]: Search handler returns [] not null for empty/no-match queries; nil guard in handler after logic returns nil
 
 ### Pending Todos
 
@@ -113,6 +117,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T15:52:20.232Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-11T15:58:04.498Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None
