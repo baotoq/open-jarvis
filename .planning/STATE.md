@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-11T13:43:15.768Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-11T13:51:06.380Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 8
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Progress: [..........] 0%
 | Phase 01-streaming-chat-loop P01 | 6 | 2 tasks | 14 files |
 | Phase 02-conversation-persistence P02 | 173s | 2 tasks | 11 files |
 | Phase 02-conversation-persistence P01 | 3 | 2 tasks | 9 files |
+| Phase 02-conversation-persistence P03 | 298s | 2 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase 02-conversation-persistence]: shadcn/ui init auto-detected Tailwind v4 and used CSS-first config without creating tailwind.config.ts
 - [Phase 02-conversation-persistence]: rowid DESC used as secondary sort in ListConversations for deterministic ordering when updated_at timestamps are equal
 - [Phase 02-conversation-persistence]: ServiceContext.Store replaces ConvStore field; ConversationStore interface enables SQLite and in-memory implementations
+- [Phase 02-conversation-persistence]: UUID assigned via Store.Get(id)==empty check rather than GetConversation(id)==nil, because in-memory ConvStore GetConversation stub always returns nil
+- [Phase 02-conversation-persistence]: pathvar.WithVars used to inject go-zero path params into httptest.Request for handler unit tests without full router
 
 ### Pending Todos
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T13:43:15.766Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-11T13:51:06.377Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
