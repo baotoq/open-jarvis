@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.11
 milestone_name: milestone
 status: planning
-stopped_at: Completed 06-add-go-linting-02-PLAN.md
-last_updated: "2026-03-11T18:37:28.432Z"
+stopped_at: Completed 06-add-go-linting-03-PLAN.md
+last_updated: "2026-03-11T18:46:32.519Z"
 last_activity: 2026-03-11 -- Roadmap created
 progress:
-  total_phases: 7
+  total_phases: 8
   completed_phases: 1
   total_plans: 29
-  completed_plans: 19
+  completed_plans: 20
   percent: 0
 ---
 
@@ -69,6 +69,7 @@ Progress: [..........] 0%
 | Phase 05-configuration-and-search P05 | 1min | 1 tasks | 0 files |
 | Phase 06-add-go-linting P01 | 107s | 2 tasks | 2 files |
 | Phase 06-add-go-linting P02 | 294s | 2 tasks | 8 files |
+| Phase 06-add-go-linting P03 | 8min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -117,11 +118,14 @@ Recent decisions affecting current work:
 - [Phase 06-add-go-linting]: revive blank-imports excluded only for svc/servicecontext.go path — SQLite driver registration requires intentional blank import
 - [Phase 06-add-go-linting]: SSE write errors return nil (stop streaming silently) on connection close; error-frame write failures are logged
 - [Phase 06-add-go-linting]: nolint:errcheck used for test cleanup (db.Close, rows.Close) — errors logged by sql driver; tx.Rollback() failures logged via log.Printf
+- [Phase 06-add-go-linting]: t.Parallel() added to TestConvStoreConcurrent and TestConfigStoreUpdate_Concurrent to fix unused *testing.T parameter while improving test isolation
+- [Phase 06-add-go-linting]: mockAIStreamer removed from servicecontext_test.go — was defined but never instantiated
 
 ### Roadmap Evolution
 
 - Phase 6 added: add go-linting
 - Phase 7 added: group BE to related domain instead of flat
+- Phase 8 added: add tilt
 
 ### Pending Todos
 
@@ -133,6 +137,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T18:37:22.565Z
-Stopped at: Completed 06-add-go-linting-02-PLAN.md
+Last session: 2026-03-11T18:46:32.516Z
+Stopped at: Completed 06-add-go-linting-03-PLAN.md
 Resume file: None

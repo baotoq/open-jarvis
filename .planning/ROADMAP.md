@@ -142,3 +142,13 @@ Plans:
 - [ ] 07-01-PLAN.md — Move all logic files into domain subdirectories (chat/logic, conv/logic, config/logic) with updated package declarations
 - [ ] 07-02-PLAN.md — Move all handler files into domain subdirectories, update logic import paths per domain
 - [ ] 07-03-PLAN.md — Update cmd/main.go imports, delete old flat directories, verify go build and go test pass
+
+### Phase 8: add tilt
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 7
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 8 to break down)
