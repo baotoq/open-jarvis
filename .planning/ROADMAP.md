@@ -80,10 +80,13 @@ Plans:
   1. User can ask the agent to search the web and receive summarized results from multiple sources
   2. User can ask the agent to fetch and summarize a specific web page
   3. Every tool execution (file, shell, web) is recorded in an audit log with timestamp, tool name, parameters, and result
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — Web tools: go-readability dep, WebFetchTool, WebSearchTool, config extensions (TOOL-03, TOOL-04)
+- [ ] 04-02-PLAN.md — AuditStore: tool_audit_log SQLite table, migrate(), Log() method, unit tests (SAFE-04)
+- [ ] 04-03-PLAN.md — Integration: wire web tools + AuditStore into ServiceContext and chatlogic agentic loop (TOOL-03, TOOL-04, SAFE-04)
+- [ ] 04-04-PLAN.md — Verification: human browser test — web fetch, web search, audit log inspection (TOOL-03, TOOL-04, SAFE-04)
 
 ### Phase 5: Configuration and Search
 **Goal**: User can configure model providers through the UI and search across all past conversations
@@ -108,5 +111,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Streaming Chat Loop | 1/3 | In Progress|  |
 | 2. Conversation Persistence | 2/5 | In Progress|  |
 | 3. File and Shell Tools | 4/5 | In Progress|  |
-| 4. Web Tools and Audit | 0/1 | Not started | - |
+| 4. Web Tools and Audit | 0/4 | Not started | - |
 | 5. Configuration and Search | 0/1 | Not started | - |
